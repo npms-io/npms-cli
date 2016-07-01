@@ -1,46 +1,60 @@
 #! /usr/bin/env node
 
-const yargs = require('yargs');
-const fetch = require('node-fetch');
+'use strict';
+
+const got = require('got');
 const Table = require('cli-table2');
 const chalk = require('chalk');
 const moment = require('moment');
 const truncate = require('truncate');
 
-function to_percent(n) {
-  return Math.round(n * 100);
-}
+const argv = require('yargs')
+  .alias('v', 'version')
+  .version(() => require('../package').version)
+  .command('search', 'Search npms.io for packages matching the search terms.', (yargs) => {
+      return yargs.option('n', {
+        alias: 'number',
+        describe: 'Limit the number of search results returned.',
+        default: 10
+      })
+    },
+    (argv) => {
 
-const table = new Table({
-  head: ['Module', 'Quality', 'Popularity', 'Maintenance', 'Score']
-});
+      got('https://api.npms.io/search', {
+        json: true,
+        query: {
+          term: argv._.slice(1),
+          size: argv.number
+        }
+      }).then(res => {
 
-const argv = yargs.usage('$0 search npm-module-name')
-  .command('search', 'Search for a module', (yargs) => {
+        const table = new Table({ head:['Package', 'Quality', 'Popularity', 'Maintenance', 'Score'] });
 
-    let terms = yargs.argv._.slice(1);
+        table.push.apply(table, res.body.results.map(item => {
 
-    fetch(`https://api.npms.io/search?from=0&size=5&term=${terms.join('+')}`).then(res => res.json()).then(json => {
+          let pkg = [
+            `${chalk.bold(item.name)} • ${chalk.dim(item.links.repository || item.links.npm)}`,
+            chalk.gray(truncate(item.description, 80, { ellipsis:'...' })),
+            chalk.dim(`updated ${moment(item.date).fromNow()} by ${item.publisher.username}`)
+          ].join('\n');
 
-      let packages = json.results.map(pkg => {
-        return [
-          [`${chalk.bold(pkg.name)} • ${chalk.dim(pkg.links.homepage)}`, chalk.gray(truncate(pkg.description, 80, { ellipsis:'...' })), chalk.dim(`updated ${moment(pkg.date).fromNow()} by ${pkg.publisher.username}`)].join('\n'),
-          { hAlign:'center', vAlign:'center', content:to_percent(pkg.score.detail.quality) },
-          { hAlign:'center', vAlign:'center', content:to_percent(pkg.score.detail.popularity) },
-          { hAlign:'center', vAlign:'center', content:to_percent(pkg.score.detail.maintenance) },
-          { hAlign:'center', vAlign:'center', content:chalk.green(to_percent(pkg.score.final)) }
-        ]
+          let score = ['quality', 'popularity', 'maintenance'].map(score => {
+            return { hAlign:'center', vAlign:'center', content:Math.round(item.score.detail[score] * 100) };
+          }).concat([{ hAlign:'center', vAlign:'center', content:chalk.green(Math.round(item.score.final * 100)) }]);
+
+          return [pkg].concat(score);
+
+        }));
+
+        console.log(table.toString());
+
+      }).catch(err => {
+        // console.error(err);
       });
-
-      table.push.apply(table, packages);
-      console.log(table.toString());
-
-    }).catch(err => {
-      console.error('A bad thing happenend!', err);
-    });
-
-  })
-  .demand(1, 'must provide a module name')
-  .help('h')
+    }
+  )
+  .usage('$0 search [-n|--number 10] search terms...')
+  .example('$0 search -n 15 react')
   .alias('h', 'help')
-  .argv;
+  .help('help')
+  .argv
