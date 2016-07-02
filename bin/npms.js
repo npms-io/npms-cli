@@ -23,7 +23,7 @@ const argv = require('yargs')
       got('https://api.npms.io/search', {
         json: true,
         query: {
-          term: argv._.slice(1),
+          term: argv._.slice(1).join('+'),
           size: argv.number
         }
       }).then(res => {
