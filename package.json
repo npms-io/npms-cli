@@ -7,7 +7,7 @@
     "email": "<john@fles.ch>"
   },
   "bin": {
-    "npms": "bin/npms.js"
+    "npms": "bin/cli.js"
   },
   "bugs": {
     "url": "https://github.com/flesch/npms-cli/issues"
@@ -32,7 +32,7 @@
     "search"
   ],
   "license": "MIT",
-  "main": "index.js",
+  "main": "bin/cli.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/flesch/npms-cli.git"
