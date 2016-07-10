@@ -26,6 +26,7 @@
     "got": "^6.3.0",
     "moment": "^2.13.0",
     "truncate": "^2.0.0",
+    "update-notifier": "^1.0.2",
     "yargs": "^4.7.1"
   },
   "engines": {
