@@ -2,7 +2,7 @@
 
 > Search <https://npms.io> from the command line!
 
-![npms-cli](https://cloud.githubusercontent.com/assets/13259/16476586/784f5f96-3e4e-11e6-8647-faf387b17e5a.png)
+![npms-cli](https://cloud.githubusercontent.com/assets/13259/16711387/e9fac438-461d-11e6-8c8d-a02f37879577.png)
 
 ## Install
 
