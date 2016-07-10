@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "author": {
     "name": "John Flesch",
-    "email": "<john@fles.ch>"
+    "email": "<john@fles.ch>",
+    "url": "https://fles.ch/"
   },
   "bin": {
     "npms": "bin/cli.js"
@@ -12,6 +13,13 @@
   "bugs": {
     "url": "https://github.com/flesch/npms-cli/issues"
   },
+  "contributors": [
+    {
+      "name": "Mike Erickson",
+      "email": "codedungeon@gmail.com",
+      "url": "http://www.codedungeon.org/"
+    }
+  ],
   "dependencies": {
     "chalk": "^1.1.3",
     "cli-table2": "^0.2.0",
@@ -19,6 +27,9 @@
     "moment": "^2.13.0",
     "truncate": "^2.0.0",
     "yargs": "^4.7.1"
+  },
+  "engines": {
+    "node": ">=4"
   },
   "homepage": "https://github.com/flesch/npms-cli",
   "keywords": [
@@ -38,6 +49,6 @@
     "url": "git+https://github.com/flesch/npms-cli.git"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"  ¯\\_(ツ)_/¯\n\" && exit 1"
   }
 }

@@ -1,4 +1,4 @@
-# npms-cli
+# npms-cli ![npm](https://img.shields.io/npm/v/npms-cli.svg) ![dependencies](https://david-dm.org/flesch/npms-cli.svg)
 
 > Search <https://npms.io> from the command line!
 
@@ -13,18 +13,18 @@ $ npm install --global npms-cli
 ## Usage
 
 ```bash
-$ npms search [-n|--number 10] search terms...
-
-Commands:
-  search  Search npms.io for packages matching the search terms.
+$ npms search [packages...]
 
 Options:
-  -n, --number   Limit the number of search results returned.      [default: 10]
-  -v, --version  Show version number                                   [boolean]
-  -h, --help     Show help                                             [boolean]
-  
-Examples:
-  npms search -n 15 react
+  -f, --from           The offset in which to start searching from.  [default: 0]
+  -s, --size           The total number of results to return.  [default: 10]
+  -o, --output         Format the results in a table or as JSON.  [default: "table"]
+  --scoreEffect        The effect that the module scores have for the final search score.
+  --qualityWeight      The weight that the quality has for the each module score.
+  --popularityWeight   The weight that the popularity has for each module score.
+  --maintenanceWeight  The weight that the maintenance has for each module score.
+  -v, --version        Show version number  [boolean]
+  -h, --help           Show help  [boolean]
 ```
 
 ## See Also
