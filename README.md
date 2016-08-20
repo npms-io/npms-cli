@@ -27,11 +27,6 @@ Options:
   -h, --help           Show help  [boolean]
 ```
 
-## See Also
-
-* <https://github.com/npms-io/npms-cli/issues/1>
-* <https://github.com/sindresorhus/alfred-npms>
-
 ## License
 
 (The MIT License)
