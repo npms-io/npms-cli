@@ -10,32 +10,38 @@ const handleError = require('./util/handleError');
 exports.command = 'search <packages...>';
 exports.describe = 'Search npms.io for packages matching the search terms.';
 exports.builder = {
-    f: {
-        alias: 'from',
+    from: {
+        alias: 'f',
         describe: 'The offset in which to start searching from.',
         default: 0,
+        type: 'number',
     },
-    s: {
-        alias: 'size',
+    size: {
+        alias: 's',
         describe: 'The total number of results to return.',
         default: 10,
+        type: 'number',
     },
-    o: {
-        alias: 'output',
+    output: {
+        alias: 'o',
         describe: 'Format the results in a table or as JSON.',
         default: 'table',
     },
     scoreEffect: {
         describe: 'The effect that the module scores have for the final search score.',
+        type: 'number',
     },
     qualityWeight: {
         describe: 'The weight that the quality has for the each module score.',
+        type: 'number',
     },
     popularityWeight: {
         describe: 'The weight that the popularity has for each module score.',
+        type: 'number',
     },
     maintenanceWeight: {
         describe: 'The weight that the maintenance has for each module score.',
+        type: 'number',
     },
 };
 
