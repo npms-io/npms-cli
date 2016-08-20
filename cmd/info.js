@@ -5,7 +5,7 @@ const got = require('got');
 const handleError = require('./util/handleError');
 
 exports.command = 'info <package>';
-exports.description = 'Get info from npms.io of a given package.';
+exports.describe = 'Get info from npms.io of a given package.';
 exports.builder = {
     o: {
         alias: 'output',
