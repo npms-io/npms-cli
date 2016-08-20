@@ -5,36 +5,43 @@ const Table = require('cli-table2');
 const chalk = require('chalk');
 const moment = require('moment');
 const truncate = require('truncate');
+const handleError = require('./util/handleError');
 
-exports.command = 'search [packages...]';
-exports.desc = 'Search npms.io for packages matching the search terms.';
+exports.command = 'search <packages...>';
+exports.describe = 'Search npms.io for packages matching the search terms.';
 exports.builder = {
-    f: {
-        alias: 'from',
+    from: {
+        alias: 'f',
         describe: 'The offset in which to start searching from.',
         default: 0,
+        type: 'number',
     },
-    s: {
-        alias: 'size',
+    size: {
+        alias: 's',
         describe: 'The total number of results to return.',
         default: 10,
+        type: 'number',
     },
-    o: {
-        alias: 'output',
+    output: {
+        alias: 'o',
         describe: 'Format the results in a table or as JSON.',
         default: 'table',
     },
     scoreEffect: {
         describe: 'The effect that the module scores have for the final search score.',
+        type: 'number',
     },
     qualityWeight: {
         describe: 'The weight that the quality has for the each module score.',
+        type: 'number',
     },
     popularityWeight: {
         describe: 'The weight that the popularity has for each module score.',
+        type: 'number',
     },
     maintenanceWeight: {
         describe: 'The weight that the maintenance has for each module score.',
+        type: 'number',
     },
 };
 
@@ -50,10 +57,11 @@ exports.handler = (argv) => {
             popularityWeight: argv.popularityWeight,
             maintenanceWeight: argv.maintenanceWeight,
         })),
-    }).then((res) => {
+    })
+    .then((res) => {
         if (!res.body.results.length) {
             console.log(chalk.red(`No matches found for: "${chalk.white.bold(argv.packages.join('+'))}"`));
-            return false;
+            return;
         }
 
         if (argv.output === 'table') {
@@ -68,15 +76,17 @@ exports.handler = (argv) => {
                     chalk.dim(`updated ${moment(module.date).fromNow()} by ${module.publisher.username}`),
                 ].join('\n');
 
-                const score = ['quality', 'popularity', 'maintenance'].map((score) => {
-                    return { hAlign: 'center', vAlign: 'center', content: Math.round(item.score.detail[score] * 100) };
-                }).concat([{ hAlign: 'center', vAlign: 'center', content: chalk.green(Math.round(item.score.final * 100)) }]);
+                const score = ['quality', 'popularity', 'maintenance']
+                .map((score) => ({ hAlign: 'center', vAlign: 'center', content: Math.round(item.score.detail[score] * 100) }))
+                .concat([{ hAlign: 'center', vAlign: 'center', content: chalk.green(Math.round(item.score.final * 100)) }]);
 
                 return [pkg].concat(score);
             }));
+
             console.log(table.toString());
         } else {
-            console.log(res.body.results);
+            console.log(JSON.stringify(res.body.results, null, 2));
         }
-    }).catch((err) => console.log(err));
+    })
+    .catch((err) => handleError(err));
 };

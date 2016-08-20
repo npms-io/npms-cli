@@ -6,6 +6,7 @@ Search <https://npms.io> from the command line!
 
 ![npms-cli](https://cloud.githubusercontent.com/assets/13259/17828647/a27c2d30-665d-11e6-9d9c-e43e02b31872.png)
 
+
 ## Install
 
 ```bash
@@ -13,6 +14,8 @@ $ npm install --global npms-cli
 ```
 
 ## Usage
+
+The most used feature is the search command:
 
 ```
 $ npms search [packages...]
@@ -28,6 +31,9 @@ Options:
   -v, --version        Show version number  [boolean]
   -h, --help           Show help  [boolean]
 ```
+
+Besides searching, the CLI provides some more useful commands. Please run `$ npms -h` for more information.
+
 
 ## License
 
