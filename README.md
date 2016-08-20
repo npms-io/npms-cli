@@ -14,7 +14,7 @@ $ npm install --global npms-cli
 
 ## Usage
 
-```bash
+```
 $ npms search [packages...]
 
 Options:
