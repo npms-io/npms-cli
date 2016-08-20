@@ -10,8 +10,6 @@
 $ npm install --global npms-cli
 ```
 
-> :warning: **NOTICE**: The [npms.io](https://npms.io/) team is working on the official `npms-cli` (<https://github.com/npms-io/npms-cli>). Ownership of the command line name "`npms`" is in the process of being transferred, so this project can be considered **DEPRECATED**, though it should work until the official version is released.
-
 ## Usage
 
 ```bash
