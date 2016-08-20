@@ -9,10 +9,12 @@ const pkg = require('./package.json');
 updateNotifier({ pkg }).notify();
 
 module.exports = yargs
+    .strict()
+    .wrap(Math.min(120, yargs.terminalWidth()))
+    .demand(1)
     .command(require('./cmd/search'))
     .command(require('./cmd/info'))
     .command(require('./cmd/open'))
-    .demand(1)
     .alias('v', 'version')
     .version(() => pkg.version)
     .alias('h', 'help')

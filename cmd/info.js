@@ -7,8 +7,8 @@ const handleError = require('./util/handleError');
 exports.command = 'info <package>';
 exports.describe = 'Get info from npms.io of a given package.';
 exports.builder = {
-    o: {
-        alias: 'output',
+    output: {
+        alias: 'o',
         describe: 'Format the results in a human readable format or as JSON.',
         default: 'human',
     },

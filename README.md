@@ -21,15 +21,15 @@ The most used feature is the search command:
 $ npms search [packages...]
 
 Options:
-  -f, --from           The offset in which to start searching from.  [default: 0]
-  -s, --size           The total number of results to return.  [default: 10]
-  -o, --output         Format the results in a table or as JSON.  [default: "table"]
-  --scoreEffect        The effect that the module scores have for the final search score.
-  --qualityWeight      The weight that the quality has for the each module score.
-  --popularityWeight   The weight that the popularity has for each module score.
-  --maintenanceWeight  The weight that the maintenance has for each module score.
-  -v, --version        Show version number  [boolean]
-  -h, --help           Show help  [boolean]
+  --from, -f           The offset in which to start searching from.         [number] [default: 0]
+  --size, -s           The total number of results to return.              [number] [default: 10]
+  --output, -o         Format the results in a table or as JSON.               [default: "table"]
+  --scoreEffect        The effect that the module scores have for the final search score.[number]
+  --qualityWeight      The weight that the quality has for the each module score.        [number]
+  --popularityWeight   The weight that the popularity has for each module score.         [number]
+  --maintenanceWeight  The weight that the maintenance has for each module score.        [number]
+  -v, --version        Show version number                                              [boolean]
+  -h, --help           Show help                                                        [boolean]
 ```
 
 Besides searching, the CLI provides some more useful commands. Please run `$ npms -h` for more information.
