@@ -5,9 +5,10 @@ const Table = require('cli-table2');
 const chalk = require('chalk');
 const moment = require('moment');
 const truncate = require('truncate');
+const handleError = require('./util/handleError');
 
-exports.command = 'search [packages...]';
-exports.desc = 'Search npms.io for packages matching the search terms.';
+exports.command = 'search <packages...>';
+exports.describe = 'Search npms.io for packages matching the search terms.';
 exports.builder = {
     f: {
         alias: 'from',
@@ -50,14 +51,17 @@ exports.handler = (argv) => {
             popularityWeight: argv.popularityWeight,
             maintenanceWeight: argv.maintenanceWeight,
         })),
-    }).then((res) => {
+    })
+    .then((res) => {
         if (!res.body.results.length) {
             console.log(chalk.red(`No matches found for: "${chalk.white.bold(argv.packages.join('+'))}"`));
-            return false;
+            return;
         }
 
         if (argv.output === 'table') {
-            const table = new Table({ head: ['Package', 'Quality', 'Popularity', 'Maintenance', 'Score'] });
+            const table = new Table({
+                head: ['Package', 'Quality', 'Popularity', 'Maintenance', 'Score'],
+            });
 
             table.push.apply(table, res.body.results.map((item) => {
                 const module = item.module;
@@ -76,7 +80,8 @@ exports.handler = (argv) => {
             }));
             console.log(table.toString());
         } else {
-            console.log(res.body.results);
+            console.log(JSON.stringify(res.body.results, null, 2));
         }
-    }).catch((err) => console.log(err));
+    })
+    .catch((err) => handleError(err));
 };

@@ -2,13 +2,9 @@
   "name": "npms-cli",
   "description": "Search https://npms.io/ from the command line!",
   "version": "1.0.4",
-  "author": {
-    "name": "John Flesch",
-    "email": "<john@fles.ch>",
-    "url": "https://fles.ch/"
-  },
+  "author": "John Flesch <john@fles.ch> (https://fles.ch)",
   "bin": {
-    "npms": "bin/cli.js"
+    "npms": "cli.js"
   },
   "bugs": {
     "url": "https://github.com/npms-io/npms-cli/issues"
@@ -18,6 +14,7 @@
     "cli-table2": "^0.2.0",
     "got": "^6.3.0",
     "moment": "^2.13.0",
+    "opn": "^4.0.2",
     "truncate": "^2.0.0",
     "update-notifier": "^1.0.2",
     "yargs": "^4.7.1"
@@ -41,7 +38,7 @@
     "search"
   ],
   "license": "MIT",
-  "main": "bin/cli.js",
+  "main": "cli.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/npms-io/npms-cli.git"
