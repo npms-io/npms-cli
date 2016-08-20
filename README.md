@@ -32,7 +32,8 @@ Options:
   -h, --help           Show help                                                        [boolean]
 ```
 
-Besides searching, the CLI provides some more useful commands. Please run `$ npms -h` for more information.
+Besides searching, the CLI provides some more useful commands.  
+Please run `$ npms -h` for more information.
 
 
 ## License
