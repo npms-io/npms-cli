@@ -1,4 +1,6 @@
-# npms-cli ![npm](https://img.shields.io/npm/v/npms-cli.svg) ![dependencies](https://david-dm.org/flesch/npms-cli.svg)
+# npms-cli
+
+[![npm][npm-image]][npm-url] [![Dependency status][david-dm-image]][david-dm-url] [![Dev Dependency status][david-dm-dev-image]][david-dm-dev-url]
 
 > Search <https://npms.io> from the command line!
 
@@ -50,3 +52,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+[npm-image]: https://img.shields.io/npm/v/npms-cli.svg
+[npm-url]: https://www.npmjs.com/package/npms-cli
+[david-dm-dev-image]: https://img.shields.io/david/dev/flesch/npms-cli.svg
+[david-dm-dev-url]: https://david-dm.org/flesch/npms-cli#info=devDependencies
+[david-dm-image]: https://img.shields.io/david/flesch/npms-cli.svg
+[david-dm-url]: https://david-dm.org/flesch/npms-cli
