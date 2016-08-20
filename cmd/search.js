@@ -27,19 +27,19 @@ exports.builder = {
         describe: 'Format the results in a table or as JSON.',
         default: 'table',
     },
-    scoreEffect: {
+    'score-effect': {
         describe: 'The effect that the module scores have for the final search score.',
         type: 'number',
     },
-    qualityWeight: {
+    'quality-weight': {
         describe: 'The weight that the quality has for the each module score.',
         type: 'number',
     },
-    popularityWeight: {
+    'popularity-weight': {
         describe: 'The weight that the popularity has for each module score.',
         type: 'number',
     },
-    maintenanceWeight: {
+    'maintenance-weight': {
         describe: 'The weight that the maintenance has for each module score.',
         type: 'number',
     },
@@ -52,10 +52,10 @@ exports.handler = (argv) => {
             term: argv.packages.join('+'),
             from: argv.from,
             size: argv.size,
-            scoreEffect: argv.scoreEffect,
-            qualityWeight: argv.qualityWeight,
-            popularityWeight: argv.popularityWeight,
-            maintenanceWeight: argv.maintenanceWeight,
+            scoreEffect: argv['score-effect'],
+            qualityWeight: argv['quality-weight'],
+            popularityWeight: argv['popularity-weight'],
+            maintenanceWeight: argv['maintenance-weight'],
         })),
     })
     .then((res) => {
