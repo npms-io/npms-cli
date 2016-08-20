@@ -59,9 +59,7 @@ exports.handler = (argv) => {
         }
 
         if (argv.output === 'table') {
-            const table = new Table({
-                head: ['Package', 'Quality', 'Popularity', 'Maintenance', 'Score'],
-            });
+            const table = new Table({ head: ['Package', 'Quality', 'Popularity', 'Maintenance', 'Score'] });
 
             table.push.apply(table, res.body.results.map((item) => {
                 const module = item.module;
@@ -72,12 +70,13 @@ exports.handler = (argv) => {
                     chalk.dim(`updated ${moment(module.date).fromNow()} by ${module.publisher.username}`),
                 ].join('\n');
 
-                const score = ['quality', 'popularity', 'maintenance'].map((score) => {
-                    return { hAlign: 'center', vAlign: 'center', content: Math.round(item.score.detail[score] * 100) };
-                }).concat([{ hAlign: 'center', vAlign: 'center', content: chalk.green(Math.round(item.score.final * 100)) }]);
+                const score = ['quality', 'popularity', 'maintenance']
+                .map((score) => ({ hAlign: 'center', vAlign: 'center', content: Math.round(item.score.detail[score] * 100) }))
+                .concat([{ hAlign: 'center', vAlign: 'center', content: chalk.green(Math.round(item.score.final * 100)) }]);
 
                 return [pkg].concat(score);
             }));
+
             console.log(table.toString());
         } else {
             console.log(JSON.stringify(res.body.results, null, 2));
