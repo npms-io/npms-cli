@@ -48,7 +48,7 @@ exports.builder = {
 exports.handler = (argv) => {
     got('https://api.npms.io/search', {
         json: true,
-        query: {
+        query: JSON.parse(JSON.stringify({
             term: argv.packages.join('+'),
             from: argv.from,
             size: argv.size,
@@ -56,7 +56,7 @@ exports.handler = (argv) => {
             qualityWeight: argv.qualityWeight,
             popularityWeight: argv.popularityWeight,
             maintenanceWeight: argv.maintenanceWeight,
-        },
+        })),
     })
     .then((res) => {
         if (!res.body.results.length) {
