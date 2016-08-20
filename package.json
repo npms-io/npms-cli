@@ -1,7 +1,7 @@
 {
   "name": "npms-cli",
   "description": "Search https://npms.io/ from the command line!",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "John Flesch <john@fles.ch> (https://fles.ch)",
   "bin": {
     "npms": "cli.js"
