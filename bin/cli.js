@@ -2,16 +2,17 @@
 
 'use strict';
 
+const yargs = require('yargs');
 const updateNotifier = require('update-notifier');
 const pkg = require('../package.json');
 
 updateNotifier({ pkg }).notify();
 
-const argv = require('yargs')
+module.exports = yargs
     .command(require('./cmd/search'))
     .demand(1)
     .alias('v', 'version')
-    .version(() => require('../package').version)
+    .version(() => pkg.version)
     .alias('h', 'help')
     .help('help')
     .argv;
