@@ -17,7 +17,7 @@ $ npm install --global npms-cli
 
 The most used feature is the search command:
 
-```bash
+```
 $ npms search [packages...]
 
 Options:
