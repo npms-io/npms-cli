@@ -15,6 +15,8 @@ $ npm install --global npms-cli
 
 ## Usage
 
+The most used feature is the search command:
+
 ```bash
 $ npms search [packages...]
 
@@ -29,6 +31,9 @@ Options:
   -v, --version        Show version number  [boolean]
   -h, --help           Show help  [boolean]
 ```
+
+Besides searching, the CLI provides some more useful commands. Please run `$ npms -h` for more information.
+
 
 ## License
 
