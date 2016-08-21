@@ -17,10 +17,10 @@ exports.builder = {
 exports.handler = (argv) => {
     got(`https://api.npms.io/module/${encodeURIComponent(argv.package)}`, { json: true })
     .then((res) => {
-        if (argv.output === 'human') {
-            console.log(util.inspect(res.body, { depth: null, colors: true }));
-        } else {
+        if (argv.output === 'json') {
             console.log(JSON.stringify(res.body, null, 2));
+        } else {
+            console.log(util.inspect(res.body, { depth: null, colors: true }));
         }
     })
     .catch((err) => handleError(err));
