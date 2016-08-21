@@ -61,6 +61,7 @@ exports.handler = (argv) => {
     .then((res) => {
         if (argv.output === 'json') {
             console.log(JSON.stringify(res.body.results, null, 2));
+            return;
         }
 
         if (!res.body.results.length) {
