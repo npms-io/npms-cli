@@ -59,34 +59,34 @@ exports.handler = (argv) => {
         })),
     })
     .then((res) => {
+        if (argv.output === 'json') {
+            console.log(JSON.stringify(res.body.results, null, 2));
+        }
+
         if (!res.body.results.length) {
             console.log(chalk.red(`No matches found for: "${chalk.white.bold(argv.packages.join('+'))}"`));
             return;
         }
 
-        if (argv.output === 'table') {
-            const table = new Table({ head: ['Package', 'Quality', 'Popularity', 'Maintenance', 'Score'] });
+        const table = new Table({ head: ['Package', 'Quality', 'Popularity', 'Maintenance', 'Score'] });
 
-            table.push.apply(table, res.body.results.map((item) => {
-                const module = item.module;
+        table.push.apply(table, res.body.results.map((item) => {
+            const module = item.module;
 
-                const pkg = [
-                    `${chalk.bold(module.name)} • ${chalk.dim(module.links.repository || module.links.npm)}`,
-                    chalk.gray(truncate(module.description, 80, { ellipsis: '...' })),
-                    chalk.dim(`updated ${moment(module.date).fromNow()} by ${module.publisher.username}`),
-                ].join('\n');
+            const pkg = [
+                `${chalk.bold(module.name)} • ${chalk.dim(module.links.repository || module.links.npm)}`,
+                chalk.gray(truncate(module.description, 80, { ellipsis: '...' })),
+                chalk.dim(`updated ${moment(module.date).fromNow()} by ${module.publisher.username}`),
+            ].join('\n');
 
-                const score = ['quality', 'popularity', 'maintenance']
-                .map((score) => ({ hAlign: 'center', vAlign: 'center', content: Math.round(item.score.detail[score] * 100) }))
-                .concat([{ hAlign: 'center', vAlign: 'center', content: chalk.green(Math.round(item.score.final * 100)) }]);
+            const score = ['quality', 'popularity', 'maintenance']
+            .map((score) => ({ hAlign: 'center', vAlign: 'center', content: Math.round(item.score.detail[score] * 100) }))
+            .concat([{ hAlign: 'center', vAlign: 'center', content: chalk.green(Math.round(item.score.final * 100)) }]);
 
-                return [pkg].concat(score);
-            }));
+            return [pkg].concat(score);
+        }));
 
-            console.log(table.toString());
-        } else {
-            console.log(JSON.stringify(res.body.results, null, 2));
-        }
+        console.log(table.toString());
     })
     .catch((err) => handleError(err));
 };
