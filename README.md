@@ -43,7 +43,7 @@ Released under the [MIT License](http://www.opensource.org/licenses/mit-license.
 
 [npm-image]: https://img.shields.io/npm/v/npms-cli.svg
 [npm-url]: https://www.npmjs.com/package/npms-cli
-[david-dm-dev-image]: https://img.shields.io/david/dev/npms/npms-cli.svg
-[david-dm-dev-url]: https://david-dm.org/npms/npms-cli#info=devDependencies
-[david-dm-image]: https://img.shields.io/david/npms/npms-cli.svg
-[david-dm-url]: https://david-dm.org/npms/npms-cli
+[david-dm-dev-image]: https://img.shields.io/david/dev/npms-io/npms-cli.svg
+[david-dm-dev-url]: https://david-dm.org/npms-io/npms-cli#info=devDependencies
+[david-dm-image]: https://img.shields.io/david/npms-io/npms-cli.svg
+[david-dm-url]: https://david-dm.org/npms-io/npms-cli
