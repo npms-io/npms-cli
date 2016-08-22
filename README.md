@@ -1,5 +1,6 @@
 # npms-cli
 
+[![Build Status](https://travis-ci.org/npms-io/npms-cli.svg?branch=master)](https://travis-ci.com/npms-io/npms-cli)
 [![npm][npm-image]][npm-url] [![Dependency status][david-dm-image]][david-dm-url] [![Dev Dependency status][david-dm-dev-image]][david-dm-dev-url]
 
 Search <https://npms.io> from the command line!
