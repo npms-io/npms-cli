@@ -1,7 +1,6 @@
 # npms-cli
 
-[![Build Status](https://travis-ci.org/npms-io/npms-cli.svg?branch=master)](https://travis-ci.com/npms-io/npms-cli)
-[![npm][npm-image]][npm-url] [![Dependency status][david-dm-image]][david-dm-url] [![Dev Dependency status][david-dm-dev-image]][david-dm-dev-url]
+[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Dependency status][david-dm-image]][david-dm-url] [![Dev Dependency status][david-dm-dev-image]][david-dm-dev-url]
 
 Search <https://npms.io> from the command line!
 
@@ -42,9 +41,14 @@ Please run `$ npms -h` for more information.
 Released under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
 
 
-[npm-image]: https://img.shields.io/npm/v/npms-cli.svg
-[npm-url]: https://www.npmjs.com/package/npms-cli
-[david-dm-dev-image]: https://img.shields.io/david/dev/npms-io/npms-cli.svg
-[david-dm-dev-url]: https://david-dm.org/npms-io/npms-cli#info=devDependencies
-[david-dm-image]: https://img.shields.io/david/npms-io/npms-cli.svg
-[david-dm-url]: https://david-dm.org/npms-io/npms-cli
+[npm-url]:https://npmjs.org/package/npms-cli
+[downloads-image]:http://img.shields.io/npm/dm/npms-cli.svg
+[npm-image]:http://img.shields.io/npm/v/npms-cli.svg
+[travis-url]:https://travis-ci.org/npms-io/npms-cli
+[travis-image]:http://img.shields.io/travis/npms-io/npms-cli/master.svg
+[coveralls-url]:https://coveralls.io/r/npms-io/npms-cli
+[coveralls-image]:https://img.shields.io/coveralls/npms-io/npms-cli/master.svg
+[david-dm-url]:https://david-dm.org/npms-io/npms-cli
+[david-dm-image]:https://img.shields.io/david/npms-io/npms-cli.svg
+[david-dm-dev-url]:https://david-dm.org/npms-io/npms-cli#info=devDependencies
+[david-dm-dev-image]:https://img.shields.io/david/dev/npms-io/npms-cli.svg
