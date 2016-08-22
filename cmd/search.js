@@ -65,7 +65,7 @@ exports.handler = (argv) => {
         }
 
         if (!res.body.results.length) {
-            console.log(chalk.red(`No matches found for: "${chalk.white.bold(argv.packages.join('+'))}"`));
+            console.log(chalk.red(`No matches found for: ${chalk.white.bold(argv.packages.join('+'))}`));
             return;
         }
 
