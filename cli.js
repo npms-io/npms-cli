@@ -16,6 +16,8 @@ yargs
 .alias('v', 'version')
 .version(() => pkg.version)
 .alias('h', 'help')
+.alias('i', 'info')
+.alias('s', 'search')
 .help('help')
 .demand(1)
 .command(require('./cmd/search'))
