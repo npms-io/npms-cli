@@ -19,7 +19,7 @@ describe(chalk.cyan('==> cmd/info.js'), () => {
             const resultObj = JSON.parse(stdout)
 
             assert(resultObj.collected.metadata.name === 'npms-cli');
-            done()
         })
+        done()
     })
 })

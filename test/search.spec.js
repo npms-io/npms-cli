@@ -16,7 +16,7 @@ describe(chalk.cyan('==> cmd/search.js'), () => {
             if (err) { throw err }
             stdout.should.contain('https://github.com/npms-io/npms-cli')
             stdout.should.not.contain('https://github.com/sindresorhus/npm-run-path')
-            done()
         })
+        done()
     })
 })

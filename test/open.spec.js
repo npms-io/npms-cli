@@ -15,15 +15,7 @@ describe(chalk.yellow('==> cmd/open.js'), () => {
         // npms gulp --open git
         childProcess.exec(`node ${cmd} open gulp`, 'utf8', (err, stdout, stderr) => {
             if (err) { throw err }
-            done()
         })
-    })
-
-    it(chalk.yellow('should open package git project in browser'), (done) => {
-        // npms gulp --open npm
-        childProcess.exec(`node ${cmd} open gulp`, 'utf8', (err, stdout, stderr) => {
-            if (err) { throw err }
-            done()
-        })
+        done()
     })
 })
