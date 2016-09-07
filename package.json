@@ -23,7 +23,8 @@
     "@satazor/eslint-config": "^3.1.1",
     "chai": "3.5.0",
     "eslint": "^3.3.1",
-    "mocha": "3.0.2"
+    "mocha": "3.0.2",
+    "trim": "0.0.1"
   },
   "engines": {
     "node": ">=4"
@@ -47,6 +48,6 @@
   },
   "scripts": {
     "lint": "eslint '{bin/*.js,bin/**/*.js}' --ignore-pattern=test/coverage",
-    "test": "mocha --slow 2500"
+    "test": "npm run lint && mocha --slow 2500"
   }
 }

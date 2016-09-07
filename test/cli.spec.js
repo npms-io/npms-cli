@@ -10,8 +10,8 @@ const pkgInfo      = require('../package.json')
 const fs           = require('fs')
 const chalk        = require('chalk')
 const childProcess = require('child_process');
-const _            = require('lodash');
 const cmd          = './cli.js';
+const trim         = require('trim');
 
 describe(chalk.cyan('==> npms search cli'), () => {
     let ret
@@ -101,7 +101,7 @@ describe(chalk.cyan('==> npms search cli'), () => {
     it('should show version [--version, -v]', (done) => {
         childProcess.exec(`node ${cmd} search gulp --version`, 'utf8', (err, stdout, stderr) => {
             if (err) { throw err }
-            const vers = _.trim(stdout)
+            const vers = trim(stdout)
 
             expect(vers).equals(pkgInfo.version)
             done()
