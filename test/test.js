@@ -20,7 +20,7 @@ describe('npmscli', () => {
 
   describe('version', () => {
     it('should return a version reflecting package version', (done) => {
-      exec(`node cli.js -v`, (out) => {
+      exec('node cli.js -v', (out) => {
         expect(out).to.match(new RegExp(package.version)) && done()
       })
     })
@@ -28,9 +28,16 @@ describe('npmscli', () => {
 
   describe('json', () => {
     it('should return valid json with 10 results (default) when using `--output json`', (done) => {
-      exec(`node cli.js search gulp --output json`, (out) => {
-        const json = JSON.parse(out)
-        expect(json).to.be.a('array').and.to.have.lengthOf(10) && done()
+      exec('node cli.js search gulp --output json', (out) => {
+        expect(JSON.parse(out)).to.be.a('array').and.to.have.lengthOf(10) && done()
+      })
+    })
+  })
+
+  describe('info', () => {
+    it('should get info without error', (done) => {
+      exec('node cli.js info gulp', (out) => {
+        expect(out).to.be.a('string') && done()
       })
     })
   })
