@@ -10,7 +10,7 @@
     "url": "https://github.com/npms-io/npms-cli/issues"
   },
   "dependencies": {
-    "chalk": "^1.1.3",
+    "chalk": "1.1.3",
     "cli-table2": "^0.2.0",
     "got": "^6.3.0",
     "moment": "^2.13.0",
@@ -21,7 +21,9 @@
   },
   "devDependencies": {
     "@satazor/eslint-config": "^3.1.1",
-    "eslint": "^3.3.1"
+    "chai": "3.5.0",
+    "eslint": "^3.3.1",
+    "mocha": "3.0.2"
   },
   "engines": {
     "node": ">=4"
@@ -45,6 +47,6 @@
   },
   "scripts": {
     "lint": "eslint '{bin/*.js,bin/**/*.js}' --ignore-pattern=test/coverage",
-    "test": "npm run lint"
+    "test": "npm run lint && mocha --slow 2500"
   }
 }
