@@ -1,121 +1,104 @@
 'use strict';
 
-/* eslint-disable no-multi-spaces, semi, no-unused-vars */
+/* global describe, it*/
 
-const chai         = require('chai')
-const assert       = chai.assert
-const should       = chai.should()
-const expect       = chai.expect
-const pkgInfo      = require('../package.json')
-const fs           = require('fs')
-const chalk        = require('chalk')
+const chai = require('chai');
+const expect = chai.expect;
+const pkgInfo = require('../package.json');
 const childProcess = require('child_process');
-const trim         = require('trim');
+const cli = require('../package.json').main;
+const cmd = `node ${cli}`;
 
-const cmd          = 'node ./cli.js';
+let resultObj;
 
-describe(chalk.cyan('==> npms search cli'), () => {
-    let ret
+const exec = (command, callback) => {
+    childProcess.exec(command, (error, out, stderr) => {
+        if (error || stderr) { throw error; }
+        callback(out);
+    });
+};
 
-    it('should return results using default size [10 results] using default `table` output ', (done) => {
+describe('==> npms-cli', () => {
+    describe('==> cli', () => {
+        it('should search without error', (done) => {
+            exec('node cli.js search gulp', (stdout) => {
+                expect(stdout).to.be.a('string') && done();
+            });
+        });
 
-        childProcess.exec(`${cmd} search gulp`, 'utf8', (err, stdout, stderr) => {
-            if (err) { throw err }
-            stdout.should.contain('┌──')
-            stdout.should.contain('│ Package')
-            stdout.should.contain('│ gulp •')
-            stdout.should.contain('├───')
-            stdout.should.contain('│ gulp-util •')
-        })
+        it('should return results using default size [10 results] using default `table` output ', (done) => {
+            exec(`${cmd} search gulp`, (stdout) => {
+                expect(stdout).to.contain('┌──');
+                expect(stdout).to.contain('│ Package');
+                expect(stdout).to.contain('│ gulp •');
+                expect(stdout).to.contain('├───');
+                expect(stdout).to.contain('│ gulp-util •');
+                done();
+            });
+        });
 
-        done()
-    })
+        it('should return results using default size [10 results] in json format', (done) => {
+            exec(`${cmd} search gulp --output json`, (stdout) => {
+                expect(stdout).to.be.a('string');
+                resultObj = JSON.parse(stdout);
+                expect(resultObj.length).to.equal(10) && done();
+            });
+        });
 
-    it('should return results using default size [10 results] in json format', (done) => {
-        childProcess.exec(`${cmd} search gulp --output json`, 'utf8', (err, stdout, stderr) => {
-            if (err) { throw err }
-            const resultObj = JSON.parse(stdout)
+        it('should start with offset [--from, -f]', (done) => {
+            exec(`${cmd} search gulp --size 3 --from 2`, (stdout) => {
+                expect(stdout).to.contain('https://github.com/terinjokes/gulp-uglify') && done();
+            });
+        });
 
-            assert(resultObj.length === 10)
-        })
-        done()
-    })
+        it('should limit results to defined size [--size, -s]', (done) => {
+            exec(`${cmd} search gulp --output json --size 2`, (stdout) => {
+                resultObj = JSON.parse(stdout);
+                expect(resultObj.length).to.equal(2) && done();
+            });
+        });
 
-    it('should start with offset [--from, -f]', (done) => {
-        childProcess.exec(`${cmd} search gulp --size 3 --from 2`, 'utf8', (err, stdout, stderr) => {
-            if (err) { throw err }
-            stdout.should.not.contain('https://github.com/gulpjs/gulp')
-        })
-        done()
-    })
+        it('should return result in JSON format [--output json, -o json]', (done) => {
+            exec(`${cmd} search gulp --output json --size 1`, (stdout) => {
+                resultObj = JSON.parse(stdout);
+                expect(resultObj.length).to.equal(1) && done();
+            });
+        });
 
-    it('should limit results to defined size [--size, -s]', (done) => {
-        childProcess.exec(`${cmd} search gulp --output json --size 2`, 'utf8', (err, stdout, stderr) => {
-            if (err) { throw err }
-            const resultObj = JSON.parse(stdout)
+        it('should scoreEffect [--scoreEffet]', (done) => {
+            exec(`${cmd} search gulp --scoreEffect 1 --size 3`, (stdout) => {
+                expect(stdout).to.not.contain('https://www.npmjs.com/package/gulped') && done();
+            });
+        });
 
-            assert(resultObj.length === 2)
-        })
-        done()
-    })
+        it('should return qualityWeight [--qualityWeight]', (done) => {
+            exec(`${cmd} search gulp --scoreEffect 1 --size 2`, (stdout) => {
+                expect(stdout).to.contain('https://github.com/gulpjs/gulp') && done();
+            });
+        });
 
-    it('should return result in JSON format [--output json, -o json]', (done) => {
-        childProcess.exec(`${cmd} search gulp --output json --size 1`, 'utf8', (err, stdout, stderr) => {
-            if (err) { throw err }
-            const resultObj = JSON.parse(stdout)
+        it('should return popularityWeight [--popularityWeight]', (done) => {
+            exec(`${cmd} search gulp --popularityWeight --size 1`, (stdout) => {
+                expect(stdout).to.contain('https://github.com/gulpjs/gulp') && done();
+            });
+        });
 
-            assert(resultObj.length === 1)
-        })
-        done()
-    })
+        it('should return maintenanceWeight [--maintenanceWeight]', (done) => {
+            exec(`${cmd} search gulp --maintenanceWeight --size 1`, (stdout) => {
+                expect(stdout).to.contain('https://github.com/gulpjs/gulp') && done();
+            });
+        });
 
-    it('should scoreEffect [--scoreEffet]', (done) => {
-        childProcess.exec(`${cmd} search gulp --scoreEffect 1 --size 3`, 'utf8', (err, stdout, stderr) => {
-            if (err) { throw err }
-            stdout.should.not.contain('https://www.npmjs.com/package/gulped')
-        })
-        done()
-    })
+        it('should show version [--version, -v]', (done) => {
+            exec(`${cmd} search gulp --version`, (stdout) => {
+                expect(stdout).contain(pkgInfo.version) && done();
+            });
+        });
 
-    it('should return qualityWeight [--qualityWeight]', (done) => {
-        childProcess.exec(`${cmd} search gulp --scoreEffect 1 --size 2`, 'utf8', (err, stdout, stderr) => {
-            if (err) { throw err }
-            stdout.should.contain('https://github.com/gulpjs/gulp')
-        })
-        done()
-    })
-
-    it('should return popularityWeight [--popularityWeight]', (done) => {
-        childProcess.exec(`${cmd} search gulp --popularityWeight --size 1`, 'utf8', (err, stdout, stderr) => {
-            if (err) { throw err }
-            stdout.should.contain('https://github.com/gulpjs/gulp')
-        })
-        done()
-    })
-
-    it('should return maintenanceWeight [--maintenanceWeight]', (done) => {
-        childProcess.exec(`${cmd} search gulp --maintenanceWeight --size 1`, 'utf8', (err, stdout, stderr) => {
-            if (err) { throw err }
-            stdout.should.contain('https://github.com/gulpjs/gulp')
-        })
-        done()
-    })
-
-    it('should show version [--version, -v]', (done) => {
-        childProcess.exec(`${cmd} search gulp --version`, 'utf8', (err, stdout, stderr) => {
-            if (err) { throw err }
-            const vers = trim(stdout)
-
-            expect(vers).equals(pkgInfo.version)
-        })
-        done()
-    })
-
-    it('should show version [--help, -h]', (done) => {
-        childProcess.exec(`${cmd} search gulp --help`, 'utf8', (err, stdout, stderr) => {
-            if (err) { throw err }
-            stdout.should.contain('The offset in which to start searching from')
-        })
-        done()
-    })
-})
+        it('should show version [--help, -h]', (done) => {
+            exec(`${cmd} search gulp --help`, (stdout) => {
+                expect(stdout).to.contain('The offset in which to start searching from') && done();
+            });
+        });
+    });
+});

@@ -1,22 +1,27 @@
 'use strict';
 
-/* eslint-disable no-multi-spaces, semi, no-unused-vars */
+/* global describe, it */
 
-const chai         = require('chai')
-const assert       = chai.assert
-const should       = chai.should()
-const chalk        = require('chalk')
-const fs           = require('fs')
+const chai = require('chai');
+const expect = chai.expect;
 const childProcess = require('child_process');
-const cmd          = require('../package.json').main;
+const cmd = require('../package.json').main;
 
-describe(chalk.cyan('==> cmd/search.js'), () => {
-    it('should return info for searched package', (done) => {
-        childProcess.exec(`node ${cmd} search npms-cli --size 1`, 'utf8', (err, stdout, stderr) => {
-            if (err) { throw err }
-            stdout.should.contain('https://github.com/npms-io/npms-cli')
-            stdout.should.not.contain('https://github.com/sindresorhus/npm-run-path')
-        })
-        done()
-    })
-})
+const exec = (command, callback) => {
+    childProcess.exec(command, (error, out, stderr) => {
+        if (error || stderr) { throw error; }
+        callback(out);
+    });
+};
+
+describe('=-> npms-cli', () => {
+    describe('==> cmd/search.js', () => {
+        it('should return info for searched package', (done) => {
+            exec(`node ${cmd} search npms-cli --size 1`, (stdout) => {
+                expect(stdout).to.contain('https://github.com/npms-io/npms-cli');
+                expect(stdout).to.not.contain('https://github.com/sindresorhus/npm-run-path');
+                done();
+            });
+        });
+    });
+});

@@ -1,25 +1,29 @@
 'use strict';
 
-/* eslint-disable no-multi-spaces, semi, no-unused-vars */
+/* global describe, it */
 
-const chai         = require('chai')
-const assert       = chai.assert
-const should       = chai.should()
-const expect       = chai.expect
-const chalk        = require('chalk')
-const fs           = require('fs')
+const chai = require('chai');
+const expect = chai.expect;
 const childProcess = require('child_process');
-const cmd          = require('../package.json').main;
+const cmd = require('../package.json').main;
+
+const exec = (command, callback) => {
+    childProcess.exec(command, (error, out, stderr) => {
+        if (error || stderr) { throw error; }
+        callback(out);
+    });
+};
 
 
-describe(chalk.cyan('==> cmd/info.js'), () => {
-    it('should return info for searched package', (done) => {
-        childProcess.exec(`node ${cmd} info npms-cli --size 1 --output json`, 'utf8', (err, stdout, stderr) => {
-            if (err) { throw err }
-            const resultObj = JSON.parse(stdout)
+let resultObj;
 
-            assert(resultObj.collected.metadata.name === 'npms-cli');
-        })
-        done()
-    })
-})
+describe('==> npms-cli', () =>{
+    describe('==> cmd/info.js', () => {
+        it('should return info for searched package', (done) => {
+            exec(`node ${cmd} info npms-cli --size 1 --output json`, (stdout) => {
+                resultObj = JSON.parse(stdout);
+                expect(resultObj.collected.metadata.name).to.equal('npms-cli') && done();
+            });
+        });
+    });
+});
