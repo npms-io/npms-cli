@@ -7,6 +7,8 @@ const betray = require('betray');
 const exec = require('./util/exec');
 
 describe('open', () => {
+    afterEach(() => nock.cleanAll());
+
     it('should open module\'s repository in browser', () => {
         nock('https://api.npms.io')
         .get('/module/gulp')
