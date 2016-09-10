@@ -21,15 +21,16 @@ The most used feature is the search command:
 $ npms search [packages...]
 
 Options:
-  --from, -f            The offset in which to start searching from.         [number] [default: 0]
-  --size, -s            The total number of results to return.              [number] [default: 10]
-  --output, -o          Format the results in a table or as JSON.               [default: "table"]
-  --score-effect        The effect that the module scores have for the final search score.[number]
-  --quality-weight      The weight that the quality has for the each module score.        [number]
-  --popularity-weight   The weight that the popularity has for each module score.         [number]
-  --maintenance-weight  The weight that the maintenance has for each module score.        [number]
-  -v, --version         Show version number                                              [boolean]
-  -h, --help            Show help                                                        [boolean]
+  --version, -v         Show version number                                                                 [boolean]
+  --help, -h            Show help                                                                           [boolean]
+  --color               Allows disabling or enabling colored output                         [boolean] [default: true]
+  --from, -f            The offset in which to start searching from.                            [number] [default: 0]
+  --size, -s            The total number of results to return.                                 [number] [default: 10]
+  --output, -o          Format the results in a table or as JSON.                                  [default: "table"]
+  --score-effect        The effect that the module scores have for the final search score.                   [number]
+  --quality-weight      The weight that the quality has for the each module score.                           [number]
+  --popularity-weight   The weight that the popularity has for each module score.                            [number]
+  --maintenance-weight  The weight that the maintenance has for each module score.                           [number]
 ```
 
 Besides searching, the CLI provides some more useful commands.  
