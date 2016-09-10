@@ -11,8 +11,7 @@ function handleError(err) {
     }
 
     console.error(err.stack);
-
-    setImmediate(() => process.exit(1));
+    process.exitCode = 1;
 }
 
 module.exports = handleError;

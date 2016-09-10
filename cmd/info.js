@@ -31,5 +31,6 @@ exports.handler = (argv) => {
             console.log(util.inspect(res.body, { depth: null, colors: argv.color }));
         }
     })
+    .then(() => { process.exitCode = 0; })
     .catch((err) => handleError(err));
 };

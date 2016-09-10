@@ -97,5 +97,6 @@ exports.handler = (argv) => {
 
         console.log(table.toString());
     })
+    .then(() => { process.exitCode = 0; })
     .catch((err) => handleError(err));
 };

@@ -11,5 +11,6 @@ exports.handler = (argv) => {
     got(`https://api.npms.io/module/${encodeURIComponent(argv.package)}`, { json: true })
     .then((res) => res.body.collected.metadata.links.repository || res.body.collected.metadata.links.npm)
     .then((link) => opn(link, { wait: false }))
+    .then(() => { process.exitCode = 0; })
     .catch((err) => handleError(err));
 };
