@@ -14,7 +14,7 @@ yargs
 .strict()
 .wrap(Math.min(120, yargs.terminalWidth()))
 .alias('v', 'version')
-.version(() => pkg.version)
+.version(pkg.version)
 .alias('h', 'help')
 .help('help')
 .demand(1)
