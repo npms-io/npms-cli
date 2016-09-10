@@ -17,7 +17,7 @@ yargs
 .version(pkg.version)
 .alias('help', 'h')
 .help('help')
-.demand(1)
+.demand(1, 'Please supply a valid command')
 
 .option('color', {
     describe: 'Allows disabling or enabling colored output',
