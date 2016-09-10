@@ -53,6 +53,6 @@
     "lint": "eslint '{*.js,cmd/**/*.js,test/**/*.js}' --ignore-pattern=test/coverage",
     "test": "mocha",
     "test-cov": "istanbul cover --dir test/coverage _mocha && echo Coverage lies in test/coverage/lcov-report/index.html",
-    "test-travis": "istanbul cover _mocha --report lcovonly && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "test-travis": "istanbul cover --dir test/coverage _mocha --report lcovonly && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   }
 }
