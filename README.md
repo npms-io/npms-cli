@@ -37,8 +37,8 @@ Options:
   --maintenance-weight  The weight that the maintenance has for each module score             [number]
 
 Examples:
-  cli.js search cross spawn                Search for "cross spawn"
-  cli.js search cross spawn --output json  Search for "cross spawn" and print results as JSON
+  npms search cross spawn                Search for "cross spawn"
+  npms search cross spawn --output json  Search for "cross spawn" and print results as JSON
 ```
 
 Besides searching, the CLI provides some more useful commands.  
