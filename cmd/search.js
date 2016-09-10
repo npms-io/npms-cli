@@ -9,41 +9,49 @@ const handleError = require('./util/handleError');
 
 exports.command = 'search <packages...>';
 exports.describe = 'Search npms.io for packages matching the search terms.';
-exports.builder = {
-    from: {
-        alias: 'f',
-        describe: 'The offset in which to start searching from.',
-        default: 0,
-        type: 'number',
-    },
-    size: {
-        alias: 's',
-        describe: 'The total number of results to return.',
-        default: 10,
-        type: 'number',
-    },
-    output: {
-        alias: 'o',
-        describe: 'Format the results in a table or as JSON.',
-        default: 'table',
-    },
-    'score-effect': {
-        describe: 'The effect that the module scores have for the final search score.',
-        type: 'number',
-    },
-    'quality-weight': {
-        describe: 'The weight that the quality has for the each module score.',
-        type: 'number',
-    },
-    'popularity-weight': {
-        describe: 'The weight that the popularity has for each module score.',
-        type: 'number',
-    },
-    'maintenance-weight': {
-        describe: 'The weight that the maintenance has for each module score.',
-        type: 'number',
-    },
-};
+exports.builder = (yargs) =>
+    yargs
+    .strict()
+    .options({
+        from: {
+            alias: 'f',
+            describe: 'The offset in which to start searching from.',
+            default: 0,
+            type: 'number',
+        },
+        size: {
+            alias: 's',
+            describe: 'The total number of results to return.',
+            default: 10,
+            type: 'number',
+        },
+        output: {
+            alias: 'o',
+            describe: 'Format the results in a table or as JSON.',
+            default: 'table',
+        },
+        'score-effect': {
+            describe: 'The effect that the module scores have for the final search score.',
+            type: 'number',
+        },
+        'quality-weight': {
+            describe: 'The weight that the quality has for the each module score.',
+            type: 'number',
+        },
+        'popularity-weight': {
+            describe: 'The weight that the popularity has for each module score.',
+            type: 'number',
+        },
+        'maintenance-weight': {
+            describe: 'The weight that the maintenance has for each module score.',
+            type: 'number',
+        },
+        color: {
+            describe: 'Allows disabling or enabling colored output',
+            type: 'boolean',
+            default: true,
+        },
+    });
 
 exports.handler = (argv) => {
     got('https://api.npms.io/search', {
