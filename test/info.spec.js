@@ -34,4 +34,20 @@ describe('info', () => {
             expect(info).to.have.keys(['analyzedAt', 'collected', 'evaluation', 'score']);
         });
     });
+
+    it('should handle API errors', () => {
+        nock('https://api.npms.io')
+        .get('/module/gulp')
+        .query({ term: 'gulp', from: '0', size: '10' })
+        .reply(500, { code: 'SOME_ERROR', message: 'Some error' });
+
+        return exec(['info', 'gulp', '--no-color'], { printStderr: false })
+        .catch((err) => {
+            expect(err.status).to.equal(1);
+            expect(err.output.stderr).to.contain('ERROR\n');
+            expect(err.output.stderr).to.contain('SOME_ERROR');
+            expect(err.output.stderr).to.contain('Some error');
+            expect(nock.isDone()).to.equal(true);
+        });
+    });
 });
