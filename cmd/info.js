@@ -9,10 +9,13 @@ exports.describe = 'Get info from npms.io of a given package.';
 exports.builder = (yargs) =>
     yargs
     .strict()
+    .demand(1, 1)
+    .usage('Usage: $0 info <package> [options]\n\nGet info from npms.io of a given package.')
+    .example('$0 info gulp', 'Get "gulp" package info')
     .options({
         output: {
             alias: 'o',
-            describe: 'Format the results in a human readable format or as JSON.',
+            describe: 'Format the results in a human readable format or as JSON',
             default: 'human',
         },
     });
