@@ -21,7 +21,13 @@
   },
   "devDependencies": {
     "@satazor/eslint-config": "^3.1.1",
-    "eslint": "^3.3.1"
+    "betray": "^1.4.0",
+    "chai": "^3.5.0",
+    "coveralls": "^2.11.12",
+    "eslint": "^3.3.1",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.0.2",
+    "nock": "^8.0.0"
   },
   "engines": {
     "node": ">=4"
@@ -45,6 +51,8 @@
   },
   "scripts": {
     "lint": "eslint '{bin/*.js,bin/**/*.js}' --ignore-pattern=test/coverage",
-    "test": "npm run lint"
+    "test": "mocha",
+    "test-cov": "istanbul cover --dir test/coverage _mocha && echo Coverage lies in test/coverage/lcov-report/index.html",
+    "test-travis": "istanbul cover _mocha --report lcovonly && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   }
 }
