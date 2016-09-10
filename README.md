@@ -37,6 +37,15 @@ Besides searching, the CLI provides some more useful commands.
 Please run `$ npms -h` for more information.
 
 
+## Tests
+
+Before running the tests, you must have read through the setup guide.
+
+```bash
+$ npm test
+$ npm test-cov # to get coverage report
+```
+
 ## License
 
 Released under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
