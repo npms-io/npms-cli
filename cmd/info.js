@@ -15,11 +15,6 @@ exports.builder = (yargs) =>
             describe: 'Format the results in a human readable format or as JSON.',
             default: 'human',
         },
-        color: {
-            describe: 'Allows disabling or enabling colored output',
-            type: 'boolean',
-            default: true,
-        },
     });
 
 exports.handler = (argv) => {

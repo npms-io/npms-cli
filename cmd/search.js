@@ -46,11 +46,6 @@ exports.builder = (yargs) =>
             describe: 'The weight that the maintenance has for each module score.',
             type: 'number',
         },
-        color: {
-            describe: 'Allows disabling or enabling colored output',
-            type: 'boolean',
-            default: true,
-        },
     });
 
 exports.handler = (argv) => {

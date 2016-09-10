@@ -8,14 +8,7 @@ exports.command = 'open <package>';
 exports.describe = 'Opens the package in your browser.';
 exports.builder = (yargs) =>
     yargs
-    .strict()
-    .options({
-        color: {
-            describe: 'Allows disabling or enabling colored output',
-            type: 'boolean',
-            default: true,
-        },
-    });
+    .strict();
 
 exports.handler = (argv) => {
     got(`https://api.npms.io/module/${encodeURIComponent(argv.package)}`, { json: true })
