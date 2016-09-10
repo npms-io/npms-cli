@@ -18,19 +18,27 @@ $ npm install --global npms-cli
 The most used feature is the search command:
 
 ```
-$ npms search [packages...]
+$ npms search [term...]
+
+Usage: npms search <term...> [options]
+
+Search npms.io for packages matching the search terms.
 
 Options:
-  --version, -v         Show version number                                               [boolean]
-  --help, -h            Show help                                                         [boolean]
-  --color               Allows disabling or enabling colored output       [boolean] [default: true]
-  --from, -f            The offset in which to start searching from.          [number] [default: 0]
-  --size, -s            The total number of results to return.               [number] [default: 10]
-  --output, -o          Format the results in a table or as JSON.                [default: "table"]
-  --score-effect        The effect that the module scores have for the final search score. [number]
-  --quality-weight      The weight that the quality has for the each module score.         [number]
-  --popularity-weight   The weight that the popularity has for each module score.          [number]
-  --maintenance-weight  The weight that the maintenance has for each module score.         [number]
+  --version, -v         Show version number                                                  [boolean]
+  --help, -h            Show help                                                            [boolean]
+  --color               Allows disabling or enabling colored output          [boolean] [default: true]
+  --from, -f            The offset in which to start searching from              [number] [default: 0]
+  --size, -s            The total number of results to return                   [number] [default: 10]
+  --output, -o          Format the results in a table or as JSON                    [default: "table"]
+  --score-effect        The effect that the module scores have for the final search score     [number]
+  --quality-weight      The weight that the quality has for the each module score             [number]
+  --popularity-weight   The weight that the popularity has for each module score              [number]
+  --maintenance-weight  The weight that the maintenance has for each module score             [number]
+
+Examples:
+  cli.js search cross spawn                Search for "cross spawn"
+  cli.js search cross spawn --output json  Search for "cross spawn" and print results as JSON
 ```
 
 Besides searching, the CLI provides some more useful commands.  
