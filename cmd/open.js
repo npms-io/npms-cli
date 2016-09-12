@@ -10,25 +10,16 @@ exports.builder = (yargs) =>
     yargs
     .strict()
     .usage('Usage: $0 open <package> [options]\n\nOpens the package in your browser..')
-    .example('$0 open gulp', 'Opens "gulp" package')
-    .example('$0 open --npms gulp', 'Opens "gulp" package in `https://npms.io` service')
-    .example('$0 open --npm gulp', 'Opens "gulp" package in `https://npmjs.org` service')
-    .example('$0 open --github gulp', 'Opens "gulp" package in `https://github.com` service')
+    .example('$0 open gulp', 'Opens "gulp" package using auto source')
+    .example('$0 open --link npms gulp', 'Opens "gulp" package in `https://npms.io` service')
+    .example('$0 open --link npm gulp', 'Opens "gulp" package in `https://npmjs.org` service')
+    .example('$0 open --link auto gulp', 'Opens "gulp" package in `https://github.com` service')
     .demand(1, 1)
     .options({
-        npms: {
-            describe: 'Open "gulp" package in `https://npms.io` service',
-            type: 'boolean',
+        link: {
+            describe: 'Open <package> using supplied link source',
+            type: 'string',
         },
-        npm: {
-            describe: 'Open "gulp" package in `https://npmjs.org` service',
-            type: 'boolean',
-        },
-        github: {
-            describe: 'Open "gulp" package in `https://github.com` service',
-            default: true,
-            type: 'boolean',
-        }
     });
 
 exports.handler = (argv) => {
@@ -40,7 +31,11 @@ exports.handler = (argv) => {
 };
 
 function getService(argv, res) {
-    if (argv.npms) { return `https://npms.io/search?term=${argv.package}`; }
-    if (argv.npm) { return res.body.collected.metadata.links.npm; }
-    return res.body.collected.metadata.links.repository || res.body.collected.metadata.links.npm;
+    const links = res.body.collected.metadata.links;
+
+    if (argv.link) {
+        if (argv.link === 'npms') { return `https://npms.io/search?term=${argv.package}`; }
+        if (argv.link === 'npm') { return links.npm; }
+    }
+    return links.repository || links.npm || links.homepage;
 }

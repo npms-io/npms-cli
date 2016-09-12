@@ -7,7 +7,7 @@ const betray = require('betray');
 const exec = require('./util/exec');
 
 describe('open', () => {
-    it('should open module\'s repository in browser using npms service', () => {
+    it('should open module\'s repository in browser using `--link npms` service', () => {
         // this will be here
         nock('https://api.npms.io')
         .get('/module/gulp')
@@ -17,7 +17,7 @@ describe('open', () => {
             unref: () => {},
         }));
 
-        return exec(['open', '--npms', 'gulp'])
+        return exec(['open', '--link', 'npms', 'gulp'])
         .then((output) => {
             expect(output.stdout).to.equal('');
             expect(output.stderr).to.equal('');
@@ -27,7 +27,7 @@ describe('open', () => {
         });
     });
 
-    it('should open module\'s repository in browser using npm service', () => {
+    it('should open module\'s repository in browser using `--link npm` service', () => {
         // this will be here
         nock('https://api.npms.io')
         .get('/module/gulp')
@@ -37,7 +37,7 @@ describe('open', () => {
             unref: () => {},
         }));
 
-        return exec(['open', '--npm', 'gulp'])
+        return exec(['open', '--link', 'npm', 'gulp'])
         .then((output) => {
             expect(output.stdout).to.equal('');
             expect(output.stderr).to.equal('');
@@ -47,7 +47,7 @@ describe('open', () => {
         });
     });
 
-    it('should open module\'s repository in browser using github service', () => {
+    it('should open module\'s repository in browser using `--link auto` service', () => {
         nock('https://api.npms.io')
         .get('/module/gulp')
         .reply(200, JSON.stringify(require('./fixtures/open/gulp.json')));
@@ -56,7 +56,7 @@ describe('open', () => {
             unref: () => {},
         }));
 
-        return exec(['open', 'gulp'])
+        return exec(['open', '--link', 'auto', 'gulp'])
         .then((output) => {
             expect(output.stdout).to.equal('');
             expect(output.stderr).to.equal('');
@@ -66,7 +66,7 @@ describe('open', () => {
         });
     });
 
-    it('should open module\'s npm page in browser using github service if it has no repository', () => {
+    it('should open module\'s npm page in browser using auto service if it has no repository', () => {
         nock('https://api.npms.io')
         .get('/module/query')
         .reply(200, JSON.stringify(require('./fixtures/open/query.json')));
