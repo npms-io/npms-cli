@@ -17,6 +17,8 @@ function getLink(argv, res) {
     return links.repository || links.npm;
 }
 
+// --------------------------------------------------------
+
 exports.command = 'open <package>';
 exports.describe = 'Opens the package in your browser.';
 exports.builder = (yargs) =>
