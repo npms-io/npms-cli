@@ -4,6 +4,19 @@ const got = require('got');
 const opn = require('opn');
 const handleError = require('./util/handleError');
 
+function getLink(argv, res) {
+    const links = res.body.collected.metadata.links;
+
+    if (argv.link === 'npms') {
+        return `https://npms.io/search?term=${argv.package}`;
+    }
+    if (argv.link === 'npm') {
+        return links.npm;
+    }
+
+    return links.repository || links.npm;
+}
+
 exports.command = 'open <package>';
 exports.describe = 'Opens the package in your browser.';
 exports.builder = (yargs) =>
@@ -29,24 +42,8 @@ exports.builder = (yargs) =>
 
 exports.handler = (argv) => {
     got(`https://api.npms.io/module/${encodeURIComponent(argv.package)}`, { json: true })
-    .then((res) => getService(argv, res))
+    .then((res) => getLink(argv, res))
     .then((link) => opn(link, { wait: false }))
     .then(() => { process.exitCode = 0; })
     .catch((err) => handleError(err));
 };
-
-function getService(argv, res) {
-    const links = res.body.collected.metadata.links;
-
-    if (argv.link === 'npms') {
-        return `https://npms.io/search?term=${argv.package}`;
-    }
-    if (argv.link === 'npm') {
-        return links.npm;
-    }
-    if (argv.link === 'auto') {
-        return links.repository || links.npm;
-    }
-
-    return links.repository || links.npm;
-}

@@ -8,7 +8,6 @@ const exec = require('./util/exec');
 
 describe('open', () => {
     it('should open module\'s repository in browser using `--link npms` service', () => {
-        // this will be here
         nock('https://api.npms.io')
         .get('/module/gulp')
         .reply(200, JSON.stringify(require('./fixtures/open/gulp.json')));
