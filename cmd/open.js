@@ -12,13 +12,18 @@ exports.builder = (yargs) =>
     .usage('Usage: $0 open <package> [options]\n\nOpens the package in your browser..')
     .example('$0 open gulp', 'Opens "gulp" package using auto source')
     .example('$0 open --link npms gulp', 'Opens "gulp" package in `https://npms.io` service')
-    .example('$0 open --link npm gulp', 'Opens "gulp" package in `https://npmjs.org` service')
-    .example('$0 open --link auto gulp', 'Opens "gulp" package in `https://github.com` service')
+    .option('link', {
+        alias: 'l',
+        describe: 'choose link',
+        choices: ['auto', 'npm', 'npms'],
+        default: 'auto',
+    })
     .demand(1, 1)
     .options({
         link: {
             describe: 'Open <package> using supplied link source',
             type: 'string',
+            default: 'auto',
         },
     });
 
@@ -33,9 +38,15 @@ exports.handler = (argv) => {
 function getService(argv, res) {
     const links = res.body.collected.metadata.links;
 
-    if (argv.link) {
-        if (argv.link === 'npms') { return `https://npms.io/search?term=${argv.package}`; }
-        if (argv.link === 'npm') { return links.npm; }
+    if (argv.link === 'npms') {
+        return `https://npms.io/search?term=${argv.package}`;
     }
-    return links.repository || links.npm || links.homepage;
+    if (argv.link === 'npm') {
+        return links.npm;
+    }
+    if (argv.link === 'auto') {
+        return links.repository || links.npm;
+    }
+
+    return links.repository || links.npm;
 }
