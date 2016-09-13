@@ -18,7 +18,45 @@ describe('open', () => {
             unref: () => {},
         }));
 
-        return exec(['open', 'gulp'])
+        return exec(['open', '--link', 'npms', 'gulp'])
+        .then((output) => {
+            expect(output.stdout).to.equal('');
+            expect(output.stderr).to.equal('');
+
+            expect(betrayed.invoked).to.equal(1);
+            expect(betrayed.invocations[0][1]).to.contain('https://npms.io/search?term=gulp');
+        });
+    });
+
+    it('should open module\'s repository in browser using `--link npm` service', () => {
+        nock('https://api.npms.io')
+        .get('/module/gulp')
+        .reply(200, JSON.stringify(require('./fixtures/open/gulp.json')));
+
+        const betrayed = betray(cp, 'spawn', () => ({
+            unref: () => {},
+        }));
+
+        return exec(['open', '--link', 'npm', 'gulp'])
+        .then((output) => {
+            expect(output.stdout).to.equal('');
+            expect(output.stderr).to.equal('');
+
+            expect(betrayed.invoked).to.equal(1);
+            expect(betrayed.invocations[0][1]).to.contain('https://www.npmjs.com/package/gulp');
+        });
+    });
+
+    it('should open module\'s repository in browser using `--link auto` service', () => {
+        nock('https://api.npms.io')
+        .get('/module/gulp')
+        .reply(200, JSON.stringify(require('./fixtures/open/gulp.json')));
+
+        const betrayed = betray(cp, 'spawn', () => ({
+            unref: () => {},
+        }));
+
+        return exec(['open', '--link', 'auto', 'gulp'])
         .then((output) => {
             expect(output.stdout).to.equal('');
             expect(output.stderr).to.equal('');
@@ -28,7 +66,7 @@ describe('open', () => {
         });
     });
 
-    it('should open module\'s npm page in browser if it has no repository', () => {
+    it('should open module\'s npm page in browser using auto service if it has no repository', () => {
         nock('https://api.npms.io')
         .get('/module/query')
         .reply(200, JSON.stringify(require('./fixtures/open/query.json')));
