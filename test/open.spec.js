@@ -7,7 +7,9 @@ const betray = require('betray');
 const exec = require('./util/exec');
 
 describe('open', () => {
-    it('should open module\'s repository in browser using `--link npms` service', () => {
+    afterEach(() => nock.cleanAll());
+
+    it('should open module\'s repository in browser', () => {
         nock('https://api.npms.io')
         .get('/module/gulp')
         .reply(200, JSON.stringify(require('./fixtures/open/gulp.json')));

@@ -92,7 +92,7 @@ describe('search', () => {
         return exec(['search', 'gulp', '--from', '1', '--output', 'json'])
         .then((output) => JSON.parse(output.stdout))
         .then((results) => {
-            expect(results[0].module.name).to.not.equal('gulp');
+            expect(results[0].module.name).to.equal('gulp-util');
             expect(nock.isDone()).to.equal(true);
         });
     });
