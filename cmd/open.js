@@ -11,10 +11,10 @@ exports.builder = (yargs) =>
     .strict()
     .usage('Usage: $0 open <package> [options]\n\nOpens the package in your browser..')
     .example('$0 open gulp', 'Opens "gulp" package using auto source')
-    .example('$0 open --link npms gulp', 'Opens "gulp" package in `https://npms.io` service')
+    .example('$0 open gulp --link npms', 'Opens "gulp" package in `https://npms.io` service')
     .option('link', {
         alias: 'l',
-        describe: 'choose link',
+        describe: 'Choose link',
         choices: ['auto', 'npm', 'npms'],
         default: 'auto',
     })
