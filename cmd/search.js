@@ -41,7 +41,7 @@ exports.handler = (argv) => {
     got('https://api.npms.io/search', {
         json: true,
         query: JSON.parse(JSON.stringify({
-            q: argv.query.join('+'),
+            q: argv.query.join(' '),
             from: argv.from,
             size: argv.size,
         })),
