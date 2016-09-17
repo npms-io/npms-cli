@@ -43,7 +43,7 @@ exports.builder = (yargs) =>
     });
 
 exports.handler = (argv) => {
-    got(`https://api.npms.io/module/${encodeURIComponent(argv.package)}`, { json: true })
+    got(`https://api.npms.io/package/${encodeURIComponent(argv.package)}`, { json: true })
     .then((res) => getLink(argv, res))
     .then((link) => opn(link, { wait: false }))
     .then(() => { process.exitCode = 0; })

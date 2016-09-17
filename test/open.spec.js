@@ -11,7 +11,7 @@ describe('open', () => {
 
     it('should open module\'s repository in browser', () => {
         nock('https://api.npms.io')
-        .get('/module/gulp')
+        .get('/package/gulp')
         .reply(200, JSON.stringify(require('./fixtures/open/gulp.json')));
 
         const betrayed = betray(cp, 'spawn', () => ({
@@ -30,7 +30,7 @@ describe('open', () => {
 
     it('should open module\'s repository in browser using `--link npm` service', () => {
         nock('https://api.npms.io')
-        .get('/module/gulp')
+        .get('/package/gulp')
         .reply(200, JSON.stringify(require('./fixtures/open/gulp.json')));
 
         const betrayed = betray(cp, 'spawn', () => ({
@@ -49,7 +49,7 @@ describe('open', () => {
 
     it('should open module\'s repository in browser using `--link auto` service', () => {
         nock('https://api.npms.io')
-        .get('/module/gulp')
+        .get('/package/gulp')
         .reply(200, JSON.stringify(require('./fixtures/open/gulp.json')));
 
         const betrayed = betray(cp, 'spawn', () => ({
@@ -68,7 +68,7 @@ describe('open', () => {
 
     it('should open module\'s npm page in browser using auto service if it has no repository', () => {
         nock('https://api.npms.io')
-        .get('/module/query')
+        .get('/package/query')
         .reply(200, JSON.stringify(require('./fixtures/open/query.json')));
 
         const betrayed = betray(cp, 'spawn', () => ({
@@ -87,8 +87,7 @@ describe('open', () => {
 
     it('should handle API errors', () => {
         nock('https://api.npms.io')
-        .get('/module/gulp')
-        .query({ term: 'gulp', from: '0', size: '10' })
+        .get('/package/gulp')
         .reply(500, { code: 'SOME_ERROR', message: 'Some error' });
 
         return exec(['open', 'gulp', '--no-color'], { printStderr: false })

@@ -9,7 +9,7 @@ describe('info', () => {
 
     it('should print results using default `human` output', () => {
         nock('https://api.npms.io')
-        .get('/module/gulp')
+        .get('/package/gulp')
         .reply(200, JSON.stringify(require('./fixtures/info/gulp.json')));
 
         return exec(['info', 'gulp', '--no-color'])
@@ -24,8 +24,7 @@ describe('info', () => {
 
     it('should print results using `json` output', () => {
         nock('https://api.npms.io')
-        .get('/module/gulp')
-        .query({ term: 'gulp', from: '0', size: '10' })
+        .get('/package/gulp')
         .reply(200, JSON.stringify(require('./fixtures/info/gulp.json')));
 
         return exec(['info', 'gulp', '--output', 'json'])
@@ -37,8 +36,7 @@ describe('info', () => {
 
     it('should handle API errors', () => {
         nock('https://api.npms.io')
-        .get('/module/gulp')
-        .query({ term: 'gulp', from: '0', size: '10' })
+        .get('/package/gulp')
         .reply(500, { code: 'SOME_ERROR', message: 'Some error' });
 
         return exec(['info', 'gulp', '--no-color'], { printStderr: false })

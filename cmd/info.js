@@ -21,7 +21,7 @@ exports.builder = (yargs) =>
     });
 
 exports.handler = (argv) => {
-    got(`https://api.npms.io/module/${encodeURIComponent(argv.package)}`, { json: true })
+    got(`https://api.npms.io/package/${encodeURIComponent(argv.package)}`, { json: true })
     .then((res) => {
         if (argv.output === 'json') {
             console.log(JSON.stringify(res.body, null, 2));

@@ -10,8 +10,8 @@ describe('search', () => {
     it('should print results using default `table` output', () => {
         nock('https://api.npms.io')
         .get('/search')
-        .query({ term: 'gulp', from: '0', size: '10' })
-        .reply(200, JSON.stringify(require('./fixtures/search/term-gulp.json')));
+        .query({ q: 'gulp', from: '0', size: '10' })
+        .reply(200, JSON.stringify(require('./fixtures/search/gulp.json')));
 
         return exec(['search', 'gulp', '--no-color'])
         .then((output) => {
@@ -25,12 +25,12 @@ describe('search', () => {
     it('should print a message using default `table` output if there are no results', () => {
         nock('https://api.npms.io')
         .get('/search')
-        .query({ term: 'sometermthatwillnevergiveresults', from: '0', size: '10' })
+        .query({ q: 'somequerythatwillnevergiveresults', from: '0', size: '10' })
         .reply(200, JSON.stringify(require('./fixtures/search/no-results.json')));
 
-        return exec(['search', 'sometermthatwillnevergiveresults', '--no-color'])
+        return exec(['search', 'somequerythatwillnevergiveresults', '--no-color'])
         .then((output) => {
-            expect(output.stdout).to.contain('No matches found for: sometermthatwillnevergiveresults');
+            expect(output.stdout).to.contain('No matches found for: somequerythatwillnevergiveresults');
             expect(nock.isDone()).to.equal(true);
         });
     });
@@ -38,14 +38,14 @@ describe('search', () => {
     it('should print results in `json` format', () => {
         nock('https://api.npms.io')
         .get('/search')
-        .query({ term: 'gulp', from: '0', size: '10' })
-        .reply(200, JSON.stringify(require('./fixtures/search/term-gulp.json')));
+        .query({ q: 'gulp', from: '0', size: '10' })
+        .reply(200, JSON.stringify(require('./fixtures/search/gulp.json')));
 
         return exec(['search', 'gulp', '--output', 'json'])
         .then((output) => JSON.parse(output.stdout))
         .then((results) => {
             expect(results).to.be.a('array');
-            expect(results[0].module.name).to.equal('gulp');
+            expect(results[0].package.name).to.equal('gulp');
             expect(nock.isDone()).to.equal(true);
         });
     });
@@ -53,10 +53,10 @@ describe('search', () => {
     it('should print an empty array using `json` output if there are no results', () => {
         nock('https://api.npms.io')
         .get('/search')
-        .query({ term: 'sometermthatwillnevergiveresults', from: '0', size: '10' })
+        .query({ q: 'somequerythatwillnevergiveresults', from: '0', size: '10' })
         .reply(200, JSON.stringify(require('./fixtures/search/no-results.json')));
 
-        return exec(['search', 'sometermthatwillnevergiveresults', '--output', 'json'])
+        return exec(['search', 'somequerythatwillnevergiveresults', '--output', 'json'])
         .then((output) => JSON.parse(output.stdout))
         .then((results) => {
             expect(results).to.be.have.length(0);
@@ -65,65 +65,53 @@ describe('search', () => {
     });
 
     it('should limit results to defined size [--size, -s]', () => {
-        const fixture = require('./fixtures/search/term-gulp.json');
+        const fixture = require('./fixtures/search/gulp.json');
 
         nock('https://api.npms.io')
         .get('/search')
-        .query({ term: 'gulp', from: '0', size: '1' })
+        .query({ q: 'gulp', from: '0', size: '1' })
         .reply(200, Object.assign({}, fixture, { results: fixture.results.slice(0, 1) }));
 
         return exec(['search', 'gulp', '--size', '1', '--output', 'json'])
         .then((output) => JSON.parse(output.stdout))
         .then((results) => {
             expect(results).to.have.length(1);
-            expect(results[0].module.name).to.equal('gulp');
+            expect(results[0].package.name).to.equal('gulp');
             expect(nock.isDone()).to.equal(true);
         });
     });
 
     it('should start with offset [--from, -f]', () => {
-        const fixture = require('./fixtures/search/term-gulp.json');
+        const fixture = require('./fixtures/search/gulp.json');
 
         nock('https://api.npms.io')
         .get('/search')
-        .query({ term: 'gulp', from: '1', size: '10' })
+        .query({ q: 'gulp', from: '1', size: '10' })
         .reply(200, Object.assign({}, fixture, { results: fixture.results.slice(1) }));
 
         return exec(['search', 'gulp', '--from', '1', '--output', 'json'])
         .then((output) => JSON.parse(output.stdout))
         .then((results) => {
-            expect(results[0].module.name).to.equal('gulp-util');
+            expect(results[0].package.name).to.equal('gulp-util');
             expect(nock.isDone()).to.equal(true);
         });
     });
 
-    it('should pass defined options to the API request \
-[--score-effect, --quality-weight, --popularity-weight, --maintenance-weight]', () => {
+    it('should pass qualifiers to the API request', () => {
         nock('https://api.npms.io')
         .get('/search')
         .query({
-            term: 'gulp',
+            q: 'gulp+exclude:deprecated',
             from: '0',
             size: '10',
-            scoreEffect: '1',
-            qualityWeight: '2',
-            popularityWeight: '3',
-            maintenanceWeight: '4',
         })
-        .reply(200, JSON.stringify(require('./fixtures/search/term-gulp.json')));
+        .reply(200, JSON.stringify(require('./fixtures/search/gulp.json')));
 
-        return exec([
-            'search', 'gulp',
-            '--score-effect', '1',
-            '--quality-weight', '2',
-            '--popularity-weight', '3',
-            '--maintenance-weight', '4',
-            '--output', 'json',
-        ])
+        return exec(['search', 'gulp', 'exclude:deprecated', '--output', 'json'])
         .then((output) => JSON.parse(output.stdout))
         .then((results) => {
             expect(results).to.be.a('array');
-            expect(results[0].module.name).to.equal('gulp');
+            expect(results[0].package.name).to.equal('gulp');
             expect(nock.isDone()).to.equal(true);
         });
     });
@@ -131,7 +119,7 @@ describe('search', () => {
     it('should handle API errors', () => {
         nock('https://api.npms.io')
         .get('/search')
-        .query({ term: 'gulp', from: '0', size: '10' })
+        .query({ q: 'gulp', from: '0', size: '10' })
         .reply(500, { code: 'SOME_ERROR', message: 'Some error' });
 
         return exec(['search', 'gulp', '--no-color'], { printStderr: false })

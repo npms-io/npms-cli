@@ -7,14 +7,15 @@ const moment = require('moment');
 const truncate = require('truncate');
 const handleError = require('./util/handleError');
 
-exports.command = 'search <term...>';
-exports.describe = 'Search npms.io for packages matching the search terms.';
+exports.command = 'search <query...>';
+exports.describe = 'Search npms.io for packages.';
 exports.builder = (yargs) =>
     yargs
     .strict()
-    .usage('Usage: $0 search <term...> [options]\n\nSearch npms.io for packages matching the search terms.')
+    .usage('Usage: $0 search <query...> [options]\n\nSearch npms.io for packages.\nFor advances filters and modifiers visit https://api-docs.npms.io/#api-search-query.')
     .example('$0 search cross spawn', 'Search for "cross spawn"')
     .example('$0 search cross spawn --output json', 'Search for "cross spawn" and print results as JSON')
+    .example('$0 search sass keywords:gulpplugin', 'Search for "sass" packages that contain the "gulpplugin" keywords')
     .demand(1)
     .options({
         from: {
@@ -34,35 +35,15 @@ exports.builder = (yargs) =>
             describe: 'Format the results in a table or as JSON',
             default: 'table',
         },
-        'score-effect': {
-            describe: 'The effect that the module scores have for the final search score',
-            type: 'number',
-        },
-        'quality-weight': {
-            describe: 'The weight that the quality has for the each module score',
-            type: 'number',
-        },
-        'popularity-weight': {
-            describe: 'The weight that the popularity has for each module score',
-            type: 'number',
-        },
-        'maintenance-weight': {
-            describe: 'The weight that the maintenance has for each module score',
-            type: 'number',
-        },
     });
 
 exports.handler = (argv) => {
     got('https://api.npms.io/search', {
         json: true,
         query: JSON.parse(JSON.stringify({
-            term: argv.term.join('+'),
+            q: argv.query.join('+'),
             from: argv.from,
             size: argv.size,
-            scoreEffect: argv['score-effect'],
-            qualityWeight: argv['quality-weight'],
-            popularityWeight: argv['popularity-weight'],
-            maintenanceWeight: argv['maintenance-weight'],
         })),
     })
     .then((res) => {
@@ -72,26 +53,26 @@ exports.handler = (argv) => {
         }
 
         if (!res.body.results.length) {
-            console.log(chalk.red(`No matches found for: ${chalk.white.bold(argv.term.join(' '))}`));
+            console.log(chalk.red(`No matches found for: ${chalk.white.bold(argv.query.join(' '))}`));
             return;
         }
 
         const table = new Table({ head: ['Package', 'Quality', 'Popularity', 'Maintenance', 'Score'] });
 
         table.push.apply(table, res.body.results.map((item) => {
-            const module = item.module;
+            const pkg = item.package;
 
-            const pkg = [
-                `${chalk.bold(module.name)} • ${chalk.dim(module.links.repository || module.links.npm)}`,
-                chalk.gray(truncate(module.description, 80, { ellipsis: '...' })),
-                chalk.dim(`updated ${moment(module.date).fromNow()} by ${module.publisher.username}`),
+            const packageColumn = [
+                `${chalk.bold(pkg.name)} • ${chalk.dim(pkg.links.repository || pkg.links.npm)}`,
+                chalk.gray(truncate(pkg.description, 80, { ellipsis: '...' })),
+                chalk.dim(`updated ${moment(pkg.date).fromNow()} by ${pkg.publisher.username}`),
             ].join('\n');
 
-            const score = ['quality', 'popularity', 'maintenance']
+            const scoreColumns = ['quality', 'popularity', 'maintenance']
             .map((score) => ({ hAlign: 'center', vAlign: 'center', content: Math.round(item.score.detail[score] * 100) }))
             .concat([{ hAlign: 'center', vAlign: 'center', content: chalk.green(Math.round(item.score.final * 100)) }]);
 
-            return [pkg].concat(score);
+            return [packageColumn].concat(scoreColumns);
         }));
 
         console.log(table.toString());
