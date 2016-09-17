@@ -101,7 +101,7 @@ describe('search', () => {
         nock('https://api.npms.io')
         .get('/search')
         .query({
-            q: 'gulp+exclude:deprecated',
+            q: 'gulp exclude:deprecated',
             from: '0',
             size: '10',
         })
