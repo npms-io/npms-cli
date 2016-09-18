@@ -101,13 +101,13 @@ describe('search', () => {
         nock('https://api.npms.io')
         .get('/search')
         .query({
-            q: 'gulp exclude:deprecated',
+            q: 'gulp not:deprecated',
             from: '0',
             size: '10',
         })
         .reply(200, JSON.stringify(require('./fixtures/search/gulp.json')));
 
-        return exec(['search', 'gulp', 'exclude:deprecated', '--output', 'json'])
+        return exec(['search', 'gulp', 'not:deprecated', '--output', 'json'])
         .then((output) => JSON.parse(output.stdout))
         .then((results) => {
             expect(results).to.be.a('array');
