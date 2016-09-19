@@ -18,10 +18,14 @@ exports.builder = (yargs) =>
             describe: 'Format the results in a human readable format or as JSON',
             default: 'human',
         },
+        api: {
+            describe: 'The API url',
+            default: 'https://api.npms.io/v2',
+        },
     });
 
 exports.handler = (argv) => {
-    got(`https://api.npms.io/package/${encodeURIComponent(argv.package)}`, { json: true })
+    got(`${argv.api}/package/${encodeURIComponent(argv.package)}`, { json: true })
     .then((res) => {
         if (argv.output === 'json') {
             console.log(JSON.stringify(res.body, null, 2));

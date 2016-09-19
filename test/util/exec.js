@@ -70,6 +70,10 @@ function waitForExit(timeout) {
 function exec(argv, options) {
     options = Object.assign({ printStderr: true, timeout: 1500 }, options);
 
+    // Force api url without version
+    argv.push('--api');
+    argv.push('https://api.npms.io');
+
     // Clear the cli & yargs from the module cache
     delete require.cache[require.resolve('../../cli')];
     delete require.cache[require.resolve('yargs')];

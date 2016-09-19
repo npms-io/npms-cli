@@ -35,10 +35,14 @@ exports.builder = (yargs) =>
             describe: 'Format the results in a table or as JSON',
             default: 'table',
         },
+        api: {
+            describe: 'The API url',
+            default: 'https://api.npms.io/v2',
+        },
     });
 
 exports.handler = (argv) => {
-    got('https://api.npms.io/search', {
+    got(`${argv.api}/search`, {
         json: true,
         query: JSON.parse(JSON.stringify({
             q: argv.query.join(' '),

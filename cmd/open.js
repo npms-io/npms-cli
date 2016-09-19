@@ -40,10 +40,14 @@ exports.builder = (yargs) =>
             type: 'string',
             default: 'auto',
         },
+        api: {
+            describe: 'The API url',
+            default: 'https://api.npms.io/v2',
+        },
     });
 
 exports.handler = (argv) => {
-    got(`https://api.npms.io/package/${encodeURIComponent(argv.package)}`, { json: true })
+    got(`${argv.api}/package/${encodeURIComponent(argv.package)}`, { json: true })
     .then((res) => getLink(argv, res))
     .then((link) => opn(link, { wait: false }))
     .then(() => { process.exitCode = 0; })
