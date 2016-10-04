@@ -17,6 +17,7 @@ exports.builder = (yargs) =>
             alias: 'o',
             describe: 'Format the results in a human readable format or as JSON',
             default: 'human',
+            choices: ['human', 'json'],
         },
         api: {
             describe: 'The API url',
