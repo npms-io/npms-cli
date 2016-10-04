@@ -34,6 +34,7 @@ exports.builder = (yargs) =>
             alias: 'o',
             describe: 'Format the results in a table or as JSON',
             default: 'table',
+            choices: ['table', 'json'],
         },
         api: {
             describe: 'The API url',
