@@ -18,11 +18,12 @@ $ npm install --global npms-cli
 The most used feature is the search command:
 
 ```
-$ npms search [term...]
+$ npms search <query>
 
-Usage: npms search <term...> [options]
+Usage: npms search <query...> [options]
 
-Search npms.io for packages matching the search terms.
+Search npms.io for packages.
+For advances filters and modifiers visit https://api-docs.npms.io/#api-search-query.
 
 Options:
   --version, -v         Show version number                                                  [boolean]
@@ -31,10 +32,6 @@ Options:
   --from, -f            The offset in which to start searching from              [number] [default: 0]
   --size, -s            The total number of results to return                   [number] [default: 10]
   --output, -o          Format the results in a table or as JSON                    [default: "table"]
-  --score-effect        The effect that the module scores have for the final search score     [number]
-  --quality-weight      The weight that the quality has for the each module score             [number]
-  --popularity-weight   The weight that the popularity has for each module score              [number]
-  --maintenance-weight  The weight that the maintenance has for each module score             [number]
 
 Examples:
   npms search cross spawn                Search for "cross spawn"
