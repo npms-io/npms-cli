@@ -6,9 +6,7 @@
   "bin": {
     "npms": "cli.js"
   },
-  "bugs": {
-    "url": "https://github.com/npms-io/npms-cli/issues"
-  },
+  "bugs": "https://github.com/npms-io/npms-cli/issues",
   "dependencies": {
     "chalk": "^1.1.3",
     "cli-table2": "^0.2.0",
