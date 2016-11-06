@@ -37,7 +37,7 @@ describe('search', () => {
         });
     });
 
-    it('should work if a "minimal" package is within the results', () => {
+    it('should work if a "minimal" package is within the results (failed analysis)', () => {
         nock('https://api.npms.io')
         .get('/search')
         .query({ q: 'gulp', from: '0', size: '10' })
