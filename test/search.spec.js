@@ -25,12 +25,29 @@ describe('search', () => {
     it('should print a message using default `table` output if there are no results', () => {
         nock('https://api.npms.io')
         .get('/search')
-        .query({ q: 'somequerythatwillnevergiveresults', from: '0', size: '10' })
-        .reply(200, JSON.stringify(require('./fixtures/search/no-results.json')));
+        .query({ q: 'hownpm', from: '0', size: '10' })
+        .reply(200, JSON.stringify(require('./fixtures/search/hownpm.json')));
 
-        return exec(['search', 'somequerythatwillnevergiveresults', '--no-color'])
+        return exec(['search', 'hownpm', '--no-color'])
         .then((output) => {
-            expect(output.stdout).to.contain('No matches found for: somequerythatwillnevergiveresults');
+            expect(output.stdout).to.contain('┌──');
+            expect(output.stdout).to.contain('│ Package');
+            expect(output.stdout).to.contain('│ hownpm •');
+            expect(nock.isDone()).to.equal(true);
+        });
+    });
+
+    it('should work if a "minimal" package is within the results', () => {
+        nock('https://api.npms.io')
+        .get('/search')
+        .query({ q: 'gulp', from: '0', size: '10' })
+        .reply(200, JSON.stringify(require('./fixtures/search/gulp.json')));
+
+        return exec(['search', 'gulp', '--no-color'])
+        .then((output) => {
+            expect(output.stdout).to.contain('┌──');
+            expect(output.stdout).to.contain('│ Package');
+            expect(output.stdout).to.contain('│ gulp •');
             expect(nock.isDone()).to.equal(true);
         });
     });

@@ -70,7 +70,7 @@ exports.handler = (argv) => {
             const packageColumn = [
                 `${chalk.bold(pkg.name)} • ${chalk.dim(pkg.links.repository || pkg.links.npm)}`,
                 chalk.gray(truncate(pkg.description, 80, { ellipsis: '...' })),
-                chalk.dim(`updated ${moment(pkg.date).fromNow()} by ${pkg.publisher.username}`),
+                pkg.date && pkg.publisher ? chalk.dim(`updated ${moment(pkg.date).fromNow()} by ${pkg.publisher.username}`) : '',
             ].join('\n');
 
             const scoreColumns = ['quality', 'popularity', 'maintenance']
