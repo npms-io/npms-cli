@@ -14,8 +14,8 @@
     "moment": "^2.13.0",
     "opn": "^4.0.2",
     "truncate": "^2.0.0",
-    "update-notifier": "^1.0.2",
-    "yargs": "^6.0.0"
+    "update-notifier": "^2.0.0",
+    "yargs": "^7.0.0"
   },
   "devDependencies": {
     "@satazor/eslint-config": "^3.1.1",
