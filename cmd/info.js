@@ -6,10 +6,12 @@ const handleError = require('./util/handleError');
 
 exports.command = 'info <package>';
 exports.describe = 'Get info from npms.io of a given package.';
+
 exports.builder = (yargs) =>
     yargs
     .usage('Usage: $0 info <package> [options]\n\nGet info from npms.io of a given package.')
     .example('$0 info gulp', 'Get "gulp" package info')
+
     .options({
         output: {
             alias: 'o',

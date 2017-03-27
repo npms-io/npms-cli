@@ -9,12 +9,14 @@ const handleError = require('./util/handleError');
 
 exports.command = 'search <query...>';
 exports.describe = 'Search npms.io for packages.';
+
 exports.builder = (yargs) =>
     yargs
     .usage('Usage: $0 search <query...> [options]\n\nSearch npms.io for packages.\nFor advances filters and modifiers visit https://api-docs.npms.io/#api-search-query.')
     .example('$0 search cross spawn', 'Search for "cross spawn"')
     .example('$0 search cross spawn --output json', 'Search for "cross spawn" and print results as JSON')
     .example('$0 search sass keywords:gulpplugin', 'Search for "sass" packages that contain the "gulpplugin" keywords')
+
     .options({
         from: {
             alias: 'f',
