@@ -8,7 +8,7 @@
   },
   "bugs": "https://github.com/npms-io/npms-cli/issues",
   "dependencies": {
-    "chalk": "^1.1.3",
+    "chalk": "^2.0.0",
     "cli-table2": "^0.2.0",
     "got": "^6.3.0",
     "moment": "^2.13.0",
