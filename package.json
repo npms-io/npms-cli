@@ -20,7 +20,7 @@
   "devDependencies": {
     "@satazor/eslint-config": "^3.1.1",
     "betray": "^1.4.0",
-    "chai": "^3.5.0",
+    "chai": "^4.1.0",
     "coveralls": "^2.11.12",
     "eslint": "^3.5.0",
     "istanbul": "^0.4.5",
