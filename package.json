@@ -27,9 +27,6 @@
     "mocha": "^3.0.2",
     "nock": "^9.0.0"
   },
-  "engines": {
-    "node": ">=4"
-  },
   "homepage": "https://github.com/npms-io/npms-cli",
   "keywords": [
     "modules",
