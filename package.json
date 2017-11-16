@@ -10,7 +10,7 @@
   "dependencies": {
     "chalk": "^2.0.0",
     "cli-table2": "^0.2.0",
-    "got": "^6.3.0",
+    "got": "^8.0.0",
     "moment": "^2.13.0",
     "opn": "^5.0.0",
     "truncate": "^2.0.0",
