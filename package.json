@@ -24,7 +24,7 @@
     "coveralls": "^2.11.12",
     "eslint": "^3.5.0",
     "istanbul": "^0.4.5",
-    "mocha": "^3.0.2",
+    "mocha": "^4.1.0",
     "nock": "^9.0.0"
   },
   "homepage": "https://github.com/npms-io/npms-cli",
