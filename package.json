@@ -15,7 +15,7 @@
     "opn": "^5.0.0",
     "truncate": "^2.0.0",
     "update-notifier": "^2.0.0",
-    "yargs": "^7.0.0"
+    "yargs": "^10.1.1"
   },
   "devDependencies": {
     "@satazor/eslint-config": "^3.1.1",
