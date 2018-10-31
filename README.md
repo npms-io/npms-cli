@@ -58,8 +58,8 @@ Released under the [MIT License](http://www.opensource.org/licenses/mit-license.
 [npm-image]:http://img.shields.io/npm/v/npms-cli.svg
 [travis-url]:https://travis-ci.org/npms-io/npms-cli
 [travis-image]:http://img.shields.io/travis/npms-io/npms-cli/master.svg
-[codecov-url]:https://codecov.io/gh/npms-io/npms-api
-[codecov-image]:https://img.shields.io/codecov/c/github/npms-io/npms-api/master.svg
+[codecov-url]:https://codecov.io/gh/npms-io/npms-cli
+[codecov-image]:https://img.shields.io/codecov/c/github/npms-io/npms-cli/master.svg
 [david-dm-url]:https://david-dm.org/npms-io/npms-cli
 [david-dm-image]:https://img.shields.io/david/npms-io/npms-cli.svg
 [david-dm-dev-url]:https://david-dm.org/npms-io/npms-cli#info=devDependencies
