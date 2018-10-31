@@ -1,7 +1,9 @@
 language: node_js
 node_js:
   - node
-  - lts/*
+  - 10
+  - 8
+  - 6
 script: "npm run test-travis"
 install: "npm install"
 after_success:
