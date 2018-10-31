@@ -54,17 +54,19 @@ exports.handler = (argv) => {
     .then((res) => {
         if (argv.output === 'json') {
             console.log(JSON.stringify(res.body.results, null, 2));
+
             return;
         }
 
         if (!res.body.results.length) {
             console.log(chalk.red(`No matches found for: ${chalk.white.bold(argv.query.join(' '))}`));
+
             return;
         }
 
         const table = new Table({ head: ['Package', 'Quality', 'Popularity', 'Maintenance', 'Score'] });
 
-        table.push.apply(table, res.body.results.map((item) => {
+        table.push(...res.body.results.map((item) => {
             const pkg = item.package;
 
             const packageColumn = [

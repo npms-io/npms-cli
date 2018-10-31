@@ -3,3 +3,6 @@ node_js:
   - node
   - lts/*
 script: "npm run test-travis"
+after_success:
+  - "npm i codecov"
+  - "node_modules/.bin/codecov"

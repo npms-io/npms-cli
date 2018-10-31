@@ -37,7 +37,7 @@ describe('info', () => {
     it('should handle API errors', () => {
         nock('https://api.npms.io')
         .get('/package/gulp')
-        .reply(500, { code: 'SOME_ERROR', message: 'Some error' });
+        .reply(555, { code: 'SOME_ERROR', message: 'Some error' });
 
         return exec(['info', 'gulp', '--no-color'], { printStderr: false })
         .catch((err) => {

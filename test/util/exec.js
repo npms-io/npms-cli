@@ -1,5 +1,7 @@
 'use strict';
 
+const stripAnsi = require('strip-ansi');
+
 const originalExit = process.exit;
 const originalStdWrite = { stdout: process.stdout.write, stderr: process.stderr.write };
 
@@ -12,6 +14,9 @@ function interceptOutput() {
     return () => {
         process.stdout.write = originalStdWrite.stdout;
         process.stderr.write = originalStdWrite.stderr;
+
+        output.stdout = stripAnsi(output.stdout);
+        output.stderr = stripAnsi(output.stderr);
 
         return output;
     };
@@ -94,7 +99,7 @@ function exec(argv, options) {
     });
 
     process.argv = ['node', './cli.js'].concat(argv);
-    require('../../cli');  // eslint-disable-line global-require
+    require('../../cli'); // eslint-disable-line global-require
 
     return promise;
 }

@@ -7,26 +7,6 @@
     "npms": "cli.js"
   },
   "bugs": "https://github.com/npms-io/npms-cli/issues",
-  "dependencies": {
-    "chalk": "^2.0.0",
-    "cli-table2": "^0.2.0",
-    "got": "^6.3.0",
-    "moment": "^2.13.0",
-    "opn": "^5.0.0",
-    "truncate": "^2.0.0",
-    "update-notifier": "^2.0.0",
-    "yargs": "^7.0.0"
-  },
-  "devDependencies": {
-    "@satazor/eslint-config": "^3.1.1",
-    "betray": "^1.4.0",
-    "chai": "^3.5.0",
-    "coveralls": "^2.11.12",
-    "eslint": "^3.5.0",
-    "istanbul": "^0.4.5",
-    "mocha": "^3.0.2",
-    "nock": "^9.0.0"
-  },
   "homepage": "https://github.com/npms-io/npms-cli",
   "keywords": [
     "modules",
@@ -45,9 +25,50 @@
     "url": "git+https://github.com/npms-io/npms-cli.git"
   },
   "scripts": {
-    "lint": "eslint '{*.js,cmd/**/*.js,test/**/*.js}' --ignore-pattern=test/coverage",
+    "lint": "eslint . --ignore-path .gitignore",
     "test": "mocha",
     "test-cov": "istanbul cover --dir test/coverage _mocha && echo Coverage lies in test/coverage/lcov-report/index.html",
-    "test-travis": "istanbul cover _mocha --report lcovonly && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "test-travis": "istanbul cover _mocha --report lcovonly && cat ./coverage/lcov.info"
+  },
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "cli-table2": "^0.2.0",
+    "got": "^9.3.0",
+    "moment": "^2.22.2",
+    "opn": "^5.4.0",
+    "truncate": "^2.0.1",
+    "update-notifier": "^2.5.0",
+    "yargs": "^12.0.2"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^7.1.2",
+    "@commitlint/config-conventional": "^7.1.2",
+    "betray": "^1.4.0",
+    "chai": "^4.2.0",
+    "eslint": "^5.8.0",
+    "eslint-config-moxy": "^6.1.1",
+    "husky": "^1.1.2",
+    "istanbul": "^0.4.5",
+    "lint-staged": "^8.0.4",
+    "mocha": "^5.2.0",
+    "nock": "^10.0.1",
+    "strip-ansi": "^5.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   }
 }
