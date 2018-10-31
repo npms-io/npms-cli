@@ -24,6 +24,9 @@
     "type": "git",
     "url": "git+https://github.com/npms-io/npms-cli.git"
   },
+  "engines": {
+    "node": ">= 8"
+  },
   "scripts": {
     "lint": "eslint . --ignore-path .gitignore",
     "test": "mocha",
