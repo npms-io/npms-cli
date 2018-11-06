@@ -1,7 +1,7 @@
 'use strict';
 
 const got = require('got');
-const Table = require('cli-table2');
+const Table = require('cli-table3');
 const chalk = require('chalk');
 const moment = require('moment');
 const truncate = require('truncate');
