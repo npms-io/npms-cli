@@ -43,13 +43,8 @@ exports.builder = (yargs) =>
     });
 
 exports.handler = (argv) => {
-    got(`${argv.api}/search`, {
+    got(`${argv.api}/search?q=${argv.query.join(' ')}&from=${argv.from}&size=${argv.size}`, {
         json: true,
-        query: JSON.parse(JSON.stringify({
-            q: argv.query.join(' '),
-            from: argv.from,
-            size: argv.size,
-        })),
     })
     .then((res) => {
         if (argv.output === 'json') {
